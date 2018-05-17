@@ -13,10 +13,10 @@ public class MainController {
     @Autowired
     private Service service;
 
-    @RequestMapping("/*")
-    public List<Topic> get() {
-        return getAllTopics();
-    }
+//    @RequestMapping("/*")
+//    public List<Topic> get() {
+//        return getAllTopics();
+//    }
 
     @RequestMapping("/hello")
     public String sayHiMethod() {

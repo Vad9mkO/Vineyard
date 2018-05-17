@@ -1,0 +1,800 @@
+<!doctype html>
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title> Vineyard manager </title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--<link rel="apple-touch-icon" href="apple-touch-icon.png">-->
+        <!-- Place favicon.ico in the root directory -->
+        <link rel="stylesheet" href="cssVendor/vendor.css">
+
+        <link rel="stylesheet" href="cssVendor/table/bootstrap.min.css" />
+        <link rel="stylesheet" href="cssVendor/table/font-awesome.min.css" />
+
+        <!-- page specific plugin styles -->
+        <link rel="stylesheet" href="cssVendor/table/jquery-ui.min.css" />
+        <link rel="stylesheet" href="cssVendor/table/bootstrap-datepicker3.min.css" />
+        <link rel="stylesheet" href="cssVendor/table/ui.jqgrid.min.css" />
+
+        <!-- text fonts -->
+        <link rel="stylesheet" href="cssVendor/table/fonts.googleapis.com.css" />
+
+        <!-- ace styles -->
+        <link rel="stylesheet" href="cssVendor/table/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+
+        <link rel="stylesheet" href="cssVendor/table/ace-skins.min.css" />
+        <link rel="stylesheet" href="cssVendor/table/ace-rtl.min.css" />
+
+        <!-- Theme initialization -->
+        <script>
+            var themeSettings = (localStorage.getItem('themeSettings')) ? JSON.parse(localStorage.getItem('themeSettings')) :
+            {};
+            var themeName = themeSettings.themeName || '';
+            if (themeName)
+            {
+                document.write('<link rel="stylesheet" id="theme-style" href=' + themeName + '"cssVendor/app-.css">');
+            }
+            else
+            {
+                document.write('<link rel="stylesheet" id="theme-style" href="cssVendor/app.css">');
+            }
+
+        </script>
+    </head>
+    <body>
+        <div class="main-wrapper">
+            <div class="app" id="app">
+                <header class="header">
+                    <div class="header-block header-block-collapse d-lg-none d-xl-none">
+                        <button class="collapse-btn" id="sidebar-collapse-btn">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                    </div>
+                    <div class="header-block header-block-search">
+                        <form role="search">
+                            <div class="input-container">
+                                <i class="fa fa-search"></i>
+                                <input type="search" placeholder="Search" id="search">
+                                <div class="underline"></div>
+                            </div>
+                        </form>
+                    </div>
+
+
+                    <div class="header-block header-block-nav">
+                        <ul class="nav-profile">
+                            <li class="notifications new" id="language">
+                                <a href="" data-toggle="dropdown">
+                                    <i class="fa" ><img src="img/translate.png"/></i>
+                                    <sup>
+                                        <span class="counter">2</span>
+                                    </sup>
+                                </a>
+                                <div class="dropdown-menu notifications-dropdown-menu">
+                                    <ul class="notifications-container">
+                                        <li>
+                                            <a href="javascript:setUkrainian(3)" class="notification-item">
+                                                <div class="img-col">
+                                                    <div class="img" style="background-image: url('img/flag_ukraine.ico')"></div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:setEnglish(3)" class="notification-item">
+                                                <div class="img-col">
+                                                    <div class="img" style="background-image: url('img/flag_uk.ico')"></div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="profile dropdown">
+                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                    <div class="img" style="background-image: url('img/avatar_human_male_profile_user_icon_512.png')"> </div>
+                                    <span class="name"> John Doe </span>
+                                </a>
+                                <div class="dropdown-menu profile-dropdown-menu" aria-labelledby="dropdownMenu1">
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fa fa-bell icon"></i> <span id="notifications">Notifications</span> </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="index.html">
+                                        <i class="fa fa-power-off icon"></i><span id="logout">Logout</span>  </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                </header>
+                <aside class="sidebar">
+                    <div class="sidebar-container">
+                        <div class="sidebar-header">
+                            <div class="brand">
+                                <div class="logo">
+                                    <span class="l l1"></span>
+                                    <span class="l l2"></span>
+                                    <span class="l l3"></span>
+                                    <span class="l l4"></span>
+                                    <span class="l l5"></span>
+                                </div> Vineyard Manager </div>
+                        </div>
+                        <nav class="menu">
+                            <ul class="sidebar-menu metismenu" id="sidebar-menu">
+                                <li>
+                                    <a href="map.html">
+                                        <i class="fa fa-home"></i> <span id="menu1">Home</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="maininfo.html">
+                                        <i class="fa fa-pagelines"></i> <span id="menu2">Bushes review</span>
+                                        <!--<i class="fa arrow"></i>-->
+                                    </a>
+                                </li>
+                                <li class="active">
+                                    <a href="table.html">
+                                        <i class="fa fa-medkit"></i> <span id="menu3">Treatment</span>
+                                        <!--<i class="fa arrow"></i>-->
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <footer class="sidebar-footer">
+                        <ul class="sidebar-menu metismenu" id="customize-menu">
+                            <li>
+                                <ul style="margin-left: 0;">
+                                    <li class="customize">
+                                        <div class="customize-item">
+                                            <div class="row customize-header">
+                                                <div class="col-4"> </div>
+                                                <div class="col-4">
+                                                    <label class="title" id="fixed">fixed</label>
+                                                </div>
+                                                <div class="col-4">
+                                                    <label class="title" id="static">static</label>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <label class="title" id="sidebar">Sidebar:</label>
+                                                </div>
+                                                <div class="col-4">
+                                                    <label>
+                                                        <input class="radio" type="radio" name="sidebarPosition" value="sidebar-fixed">
+                                                        <span></span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-4">
+                                                    <label>
+                                                        <input class="radio" type="radio" name="sidebarPosition" value="">
+                                                        <span></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <label class="title" id="header">Header:</label>
+                                                </div>
+                                                <div class="col-4">
+                                                    <label>
+                                                        <input class="radio" type="radio" name="headerPosition" value="header-fixed">
+                                                        <span></span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-4">
+                                                    <label>
+                                                        <input class="radio" type="radio" name="headerPosition" value="">
+                                                        <span></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <label class="title" id="footer">Footer:</label>
+                                                </div>
+                                                <div class="col-4">
+                                                    <label>
+                                                        <input class="radio" type="radio" name="footerPosition" value="footer-fixed">
+                                                        <span></span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-4">
+                                                    <label>
+                                                        <input class="radio" type="radio" name="footerPosition" value="">
+                                                        <span></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="customize-item">
+                                            <ul class="customize-colors" style="margin-left: 0">
+                                                <li>
+                                                    <span class="color-item color-red" data-theme="red"></span>
+                                                </li>
+                                                <li>
+                                                    <span class="color-item color-orange" data-theme="orange"></span>
+                                                </li>
+                                                <li>
+                                                    <span class="color-item color-green active" data-theme=""></span>
+                                                </li>
+                                                <li>
+                                                    <span class="color-item color-seagreen" data-theme="seagreen"></span>
+                                                </li>
+                                                <li>
+                                                    <span class="color-item color-blue" data-theme="blue"></span>
+                                                </li>
+                                                <li>
+                                                    <span class="color-item color-purple" data-theme="purple"></span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <a href="">
+                                    <i class="fa fa-cog"></i> <span id="customize">Customize</span> </a>
+                            </li>
+                        </ul>
+                    </footer>
+                </aside>
+                <div class="sidebar-overlay" id="sidebar-overlay"></div>
+                <div class="sidebar-mobile-menu-handle" id="sidebar-mobile-menu-handle"></div>
+                <div class="mobile-menu-handle"></div>
+                <article class="content dashboard-page">
+                    <section class="section map-tasks">
+                        <div class="row sameheight-container">
+                            <div class="col-md-12">
+                                <div class="card sameheight-item" data-exclude="xs,sm">
+                                    <div>
+                                        <div class="col-xs-12">
+
+                                           <table id="grid-table"></table>
+                                            <div id="grid-pager"></div>
+
+                                        </div><!-- /.col -->
+                                    </div><!-- /.row -->
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </article>
+
+                <div class="modal fade" id="modal-media">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Media Library</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    <span class="sr-only">Close</span>
+                                </button>
+                            </div>
+                            <div class="modal-body modal-tab-container">
+                                <ul class="nav nav-tabs modal-tabs" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#gallery" data-toggle="tab" role="tab">Gallery</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="#upload" data-toggle="tab" role="tab">Upload</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content modal-tab-content">
+                                    <div class="tab-pane fade" id="gallery" role="tabpanel">
+                                        <div class="images-container">
+                                            <div class="row"> </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade active in" id="upload" role="tabpanel">
+                                        <div class="upload-container">
+                                            <div id="dropzone">
+                                                <form action="/" method="POST" enctype="multipart/form-data" class="dropzone needsclick dz-clickable" id="demo-upload">
+                                                    <div class="dz-message-block">
+                                                        <div class="dz-message needsclick"> Drop files here or click to upload. </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Insert Selected</button>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <!-- /.modal -->
+                <div class="modal fade" id="confirm-modal">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">
+                                    <i class="fa fa-warning"></i> Alert</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Are you sure want to do this?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Yes</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <!-- /.modal -->
+            </div>
+        </div>
+        <!-- Reference block for JS -->
+        <div class="ref" id="ref">
+            <div class="color-primary"></div>
+            <div class="chart">
+                <div class="color-primary"></div>
+                <div class="color-secondary"></div>
+            </div>
+        </div>
+        <script>
+            (function(i, s, o, g, r, a, m)
+            {
+                i['GoogleAnalyticsObject'] = r;
+                i[r] = i[r] || function()
+                {
+                    (i[r].q = i[r].q || []).push(arguments)
+                };
+                i[r].l = 1 * new Date();
+                a = s.createElement(o);
+                m = s.getElementsByTagName(o)[0];
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+            ga('create', 'UA-80463319-4', 'auto');
+            ga('send', 'pageview');
+        </script>
+        <script src="jsVendor/ace-extra.min.js"></script>
+        <script src="jsVendor/vendor.js"></script>
+        <script src="jsVendor/app.js"></script>
+        <!--<script src="js/bootstrap.min.js"></script>-->
+
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <!-- page specific plugin scripts -->
+        <script src="jsVendor/bootstrap-datepicker.min.js"></script>
+        <script src="jsVendor/jquery.jqGrid.min.js"></script>
+        <script src="jsVendor/grid.locale-en.js"></script>
+
+        <!-- ace scripts -->
+        <script src="jsVendor/ace-elements.min.js"></script>
+        <script src="jsVendor/ace.min.js"></script>
+        <!--<script-->
+                <!--src="https://code.jquery.com/jquery-2.2.4.min.js"-->
+                <!--integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="-->
+                <!--crossorigin="anonymous"></script>-->
+        <!-- TABLE scripts -->
+        <script type="text/javascript">
+
+            if(sessionStorage.getItem('lang') === null) {
+                sessionStorage.setItem('lang', 2);
+            }
+
+            var english = {
+                'tableheader':'Bushes treatment history','id':'ID', 'date':'Date', 'treatment':'Treatment type', 'staff':'Staff used', 'success':'Success', 'notes':'Notes'
+            };
+
+            var ukrainian = {
+                'tableheader':'Історія догляду','id':'Ідентифікатор', 'date':'Дата', 'treatment':'Вид операції', 'staff':'Задіяні засоби', 'success':'Успішність', 'notes':'Замітки'
+            };
+
+            var language = ukrainian;
+
+            if(sessionStorage.getItem('lang') === 1) {
+                language = ukrainian;
+            }
+
+            var grid_data =
+                [
+                    {id:"1",treatment:"Irrigation",note:"note",success:"Yes",staff:"Water", sdate:"2017-12-03"},
+                    {id:"2",treatment:"Chemical treatment",note:"Long text ",success:"Yes",staff:"CO3H2",sdate:"2017-12-03"},
+                    {id:"3",treatment:"Fertilizing",note:"note3",success:"Yes",staff:"TNT",sdate:"2017-12-03"},
+                    {id:"4",treatment:"Irrigation",note:"note",success:"No",staff:"Water",sdate:"2017-12-03"},
+                    {id:"5",treatment:"Fertilizing",note:"note2",success:"Yes",staff:"FedEx",sdate:"2017-12-03"},
+                    {id:"6",treatment:"Irrigation",note:"note3",success:"No", staff:"Soil",sdate:"2017-12-03"},
+                    {id:"7",treatment:"Fertilizing",note:"note",success:"Yes",staff:"ARAMEX",sdate:"2017-12-03"},
+                    {id:"8",treatment:"Fertilizing",note:"note2",success:"Yes",staff:"TNT",sdate:"2017-12-03"},
+                    {id:"9",treatment:"Irrigation",note:"note3",success:"No", staff:"Water",sdate:"2017-12-03"},
+                    {id:"10",treatment:"Chemical treatment",note:"note",success:"Yes",staff:"CO3H2", sdate:"2017-12-03"}
+                ];
+
+//            var subgrid_data =
+//                [
+//                    {id:"1", name:"sub grid item 1", qty: 11},
+//                    {id:"2", name:"sub grid item 2", qty: 3},
+//                    {id:"3", name:"sub grid item 3", qty: 12},
+//                    {id:"4", name:"sub grid item 4", qty: 5},
+//                    {id:"5", name:"sub grid item 5", qty: 2},
+//                    {id:"6", name:"sub grid item 6", qty: 9},
+//                    {id:"7", name:"sub grid item 7", qty: 3},
+//                    {id:"8", name:"sub grid item 8", qty: 8}
+//                ];
+
+            jQuery(function($) {
+                var grid_selector = "#grid-table";
+                    var pager_selector = "#grid-pager";
+
+
+                var parent_column = $(grid_selector).closest('[class*="col-"]');
+                //resize to fit page size
+                $(window).on('resize.jqGrid', function () {
+                    $(grid_selector).jqGrid( 'setGridWidth', parent_column.width() );
+//                    $(grid_selector).jqGrid( 'setGridHeight', parent_column.height() );
+                });
+
+                //resize on sidebar collapse/expand
+                $(document).on('settings.ace.jqGrid' , function(ev, event_name, collapsed) {
+                    if( event_name === 'sidebar_collapsed' || event_name === 'main_container_fixed' ) {
+                        //setTimeout is for webkit only to give time for DOM changes and then redraw!!!
+                        setTimeout(function() {
+                            $(grid_selector).jqGrid( 'setGridWidth', parent_column.width() );
+                        }, 20);
+                    }
+                });
+
+                //if your grid is inside another element, for example a tab pane, you should use its parent's width:
+                /**
+                 $(window).on('resize.jqGrid', function () {
+					var parent_width = $(grid_selector).closest('.tab-pane').width();
+					$(grid_selector).jqGrid( 'setGridWidth', parent_width );
+				})
+                 //and also set width when tab pane becomes visible
+                 $('#myTab a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+				  if($(e.target).attr('href') == '#mygrid') {
+					var parent_width = $(grid_selector).closest('.tab-pane').width();
+					$(grid_selector).jqGrid( 'setGridWidth', parent_width );
+				  }
+				})
+                 */
+
+
+                jQuery(grid_selector).jqGrid({
+                    data: grid_data,
+                    //subgrid options
+//                    subGrid : true,
+                    //subGridModel: [{ name : ['No','Item Name','Qty'], width : [55,200,80] }],
+                    //datatype: "xml",
+//                    subGridOptions : {
+//                        plusicon : "ace-icon fa fa-plus center bigger-110 blue",
+//                        minusicon  : "ace-icon fa fa-minus center bigger-110 blue",
+//                        openicon : "ace-icon fa fa-chevron-right center orange"
+//                    },
+                    //for this example we are using local data
+//                    subGridRowExpanded: function (subgridDivId, rowId) {
+//                        var subgridTableId = subgridDivId + "_t";
+//                        $("#" + subgridDivId).html("<table id='" + subgridTableId + "'></table>");
+//                        $("#" + subgridTableId).jqGrid({
+//                            datatype: 'local',
+//                            data: subgrid_data,
+//                            colNames: ['No','Item Name','Qty'],
+//                            colModel: [
+//                                { name: 'id', width: 50 },
+//                                { name: 'name', width: 150 },
+//                                { name: 'qty', width: 50 }
+//                            ]
+//                        });
+//                    },
+
+
+                    //direction: "rtl",
+                    hidegrid: false,
+                    datatype: "local",
+                    height: 381,
+                    colNames:[' ', 'ID','Date','Threatment type', 'Staff used', 'Success','Notes'],
+                    colModel:[
+                            {name:'myac',index:'', width:80, fixed:true, sortable:false, resize:false,
+                            formatter:'actions',
+                            formatoptions:{
+                                keys:true,
+                                //delbutton: false,//disable delete button
+
+                                delOptions:{recreateForm: true, beforeShowForm:beforeDeleteCallback}
+                                //editformbutton:true, editOptions:{recreateForm: true, beforeShowForm:beforeEditCallback}
+                            }
+                        },
+                        {name:'id', index:'id', width:60, sorttype:"int", editable: true},
+                        {name: 'date',index:'sdate',width:90, editable:true, sorttype:"date",unformat: pickDate},
+                        {name:'treatment',index:'treatment', width:150,editable: true,edittype:"select",editoptions:{value:"FE:Irrigation;IN:Fertilizing;TN:Chemical treatment"}},
+                        {name:'staff',index:'staff', width:70, editable: true, editoptions:{size:"20",maxlength:"30"}},
+                        {name:'success',index:'success', width:90, editable: true, edittype:"checkbox",editoptions: {value:"Yes:No"},unformat: aceSwitch },
+                        {name:'note',index:'note', width:150, sortable:false,editable: true,edittype:"textarea", editoptions:{rows:"2",cols:"10"}}
+
+                    ],
+
+                    viewrecords: true,
+                    rowNum:10,
+                    rowList:[10,20,30],
+                    pager : pager_selector,
+                    altRows: true,
+                    //toppager: true,
+
+                    multiselect: true,
+                    //multikey: "ctrlKey",
+                    multiboxonly: true,
+
+                    loadComplete : function() {
+                        var table = this;
+                        setTimeout(function(){
+                            styleCheckbox(table);
+
+                            updateActionIcons(table);
+                            updatePagerIcons(table);
+                            enableTooltips(table);
+                        }, 0);
+                    },
+
+                    editurl: "./dummy.php",//nothing is saved
+                    caption: 'Treating history'
+
+                    //,autowidth: true,
+
+
+                    /**
+                     ,
+                     grouping:true,
+                     groupingView : {
+						 groupField : ['name'],
+						 groupDataSorted : true,
+						 plusicon : 'fa fa-chevron-down bigger-110',
+						 minusicon : 'fa fa-chevron-up bigger-110'
+					},
+                     caption: "Grouping"
+                     */
+
+                });
+                $(window).triggerHandler('resize.jqGrid');//trigger window resize to make the grid get the correct size
+
+
+
+                //enable search/filter toolbar
+                //jQuery(grid_selector).jqGrid('filterToolbar',{defaultSearch:true,stringResult:true})
+                //jQuery(grid_selector).filterToolbar({});
+
+
+                //switch element when editing inline
+                function aceSwitch( cellvalue, options, cell ) {
+                    setTimeout(function(){
+                        $(cell) .find('input[type=checkbox]')
+                            .addClass('ace ace-switch ace-switch-5')
+                            .after('<span class="lbl"></span>');
+                    }, 0);
+                }
+                //enable datepicker
+                function pickDate( cellvalue, options, cell ) {
+                    setTimeout(function(){
+                        $(cell) .find('input[type=text]')
+                            .datepicker({format:'yyyy-mm-dd' , autoclose:true});
+                    }, 0);
+                }
+
+                //navButtons
+                jQuery(grid_selector).jqGrid('navGrid',pager_selector,
+                    { 	//navbar options
+                        edit: true,
+                        editicon : 'ace-icon fa fa-pencil blue',
+                        add: true,
+                        addicon : 'ace-icon fa fa-plus-circle purple',
+                        del: true,
+                        delicon : 'ace-icon fa fa-trash-o red',
+                        search: true,
+                        searchicon : 'ace-icon fa fa-search orange',
+                        refresh: true,
+                        refreshicon : 'ace-icon fa fa-refresh green',
+                        view: true,
+                        viewicon : 'ace-icon fa fa-search-plus grey',
+                    },
+                    {
+                        //edit record form
+                        //closeAfterEdit: true,
+                        //width: 700,
+                        recreateForm: true,
+                        beforeShowForm : function(e) {
+                            var form = $(e[0]);
+                            form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />');
+                            style_edit_form(form);
+                        }
+                    },
+                    {
+                        //new record form
+                        //width: 700,
+                        closeAfterAdd: true,
+                        recreateForm: true,
+                        viewPagerButtons: false,
+                        beforeShowForm : function(e) {
+                            var form = $(e[0]);
+                            form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar')
+                                .wrapInner('<div class="widget-header" />')
+                            style_edit_form(form);
+                        }
+                    },
+                    {
+                        //delete record form
+                        recreateForm: true,
+                        beforeShowForm : function(e) {
+                            var form = $(e[0]);
+                            if(form.data('styled')) return false;
+
+                            form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />');
+                            style_delete_form(form);
+
+                            form.data('styled', true);
+                        },
+                        onClick : function(e) {
+                            //alert(1);
+                        }
+                    },
+                    {
+                        //search form
+                        recreateForm: true,
+                        afterShowSearch: function(e){
+                            var form = $(e[0]);
+                            form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />');
+                            style_search_form(form);
+                        },
+                        afterRedraw: function(){
+                            style_search_filters($(this));
+                        }
+                        ,
+                        multipleSearch: true
+                        /**
+                         multipleGroup:true,
+                         showQuery: true
+                         */
+                    },
+                    {
+                        //view record form
+                        recreateForm: true,
+                        beforeShowForm: function(e){
+                            var form = $(e[0]);
+                            form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />');
+                        }
+                    }
+                )
+
+
+
+                function style_edit_form(form) {
+                    //enable datepicker on "sdate" field and switches for "stock" field
+                    form.find('input[name=sdate]').datepicker({format:'yyyy-mm-dd' , autoclose:true});
+
+                    form.find('input[name=success]').addClass('ace ace-switch ace-switch-5').after('<span class="lbl"></span>');
+                    //don't wrap inside a label element, the checkbox value won't be submitted (POST'ed)
+                    //.addClass('ace ace-switch ace-switch-5').wrap('<label class="inline" />').after('<span class="lbl"></span>');
+
+                    //update buttons classes
+                    var buttons = form.next().find('.EditButton .fm-button');
+                    buttons.addClass('btn btn-sm').find('[class*="-icon"]').hide();//ui-icon, s-icon
+                    buttons.eq(0).addClass('btn-primary').prepend('<i class="ace-icon fa fa-check"></i>');
+                    buttons.eq(1).prepend('<i class="ace-icon fa fa-times"></i>');
+
+                    buttons = form.next().find('.navButton a');
+                    buttons.find('.ui-icon').hide();
+                    buttons.eq(0).append('<i class="ace-icon fa fa-chevron-left"></i>');
+                    buttons.eq(1).append('<i class="ace-icon fa fa-chevron-right"></i>');
+                }
+
+                function style_delete_form(form) {
+                    var buttons = form.next().find('.EditButton .fm-button');
+                    buttons.addClass('btn btn-sm btn-white btn-round').find('[class*="-icon"]').hide();//ui-icon, s-icon
+                    buttons.eq(0).addClass('btn-danger').prepend('<i class="ace-icon fa fa-trash-o"></i>');
+                    buttons.eq(1).addClass('btn-default').prepend('<i class="ace-icon fa fa-times"></i>')
+                }
+
+                function style_search_filters(form) {
+                    form.find('.delete-rule').val('X');
+                    form.find('.add-rule').addClass('btn btn-xs btn-primary');
+                    form.find('.add-group').addClass('btn btn-xs btn-success');
+                    form.find('.delete-group').addClass('btn btn-xs btn-danger');
+                }
+                function style_search_form(form) {
+                    var dialog = form.closest('.ui-jqdialog');
+                    var buttons = dialog.find('.EditTable');
+                    buttons.find('.EditButton a[id*="_reset"]').addClass('btn btn-sm btn-info').find('.ui-icon').attr('class', 'ace-icon fa fa-retweet');
+                    buttons.find('.EditButton a[id*="_query"]').addClass('btn btn-sm btn-inverse').find('.ui-icon').attr('class', 'ace-icon fa fa-comment-o');
+                    buttons.find('.EditButton a[id*="_search"]').addClass('btn btn-sm btn-purple').find('.ui-icon').attr('class', 'ace-icon fa fa-search');
+                }
+
+                function beforeDeleteCallback(e) {
+                    var form = $(e[0]);
+                    if(form.data('styled')) return false;
+
+                    form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />');
+                    style_delete_form(form);
+
+                    form.data('styled', true);
+                }
+
+                function beforeEditCallback(e) {
+                    var form = $(e[0]);
+                    form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />');
+                    style_edit_form(form);
+                }
+
+
+
+                //it causes some flicker when reloading or navigating grid
+                //it may be possible to have some custom formatter to do this as the grid is being created to prevent this
+                //or go back to default browser checkbox styles for the grid
+                function styleCheckbox(table) {
+                    /**
+                     $(table).find('input:checkbox').addClass('ace')
+                     .wrap('<label />')
+                     .after('<span class="lbl align-top" />')
+
+
+                     $('.ui-jqgrid-labels th[id*="_cb"]:first-child')
+                     .find('input.cbox[type=checkbox]').addClass('ace')
+                     .wrap('<label />').after('<span class="lbl align-top" />');
+                     */
+                }
+
+
+                //unlike navButtons icons, action icons in rows seem to be hard-coded
+                //you can change them like this in here if you want
+                function updateActionIcons(table) {
+                    /**
+                     var replacement =
+                     {
+                         'ui-ace-icon fa fa-pencil' : 'ace-icon fa fa-pencil blue',
+                         'ui-ace-icon fa fa-trash-o' : 'ace-icon fa fa-trash-o red',
+                         'ui-icon-disk' : 'ace-icon fa fa-check green',
+                         'ui-icon-cancel' : 'ace-icon fa fa-times red'
+                     };
+                     $(table).find('.ui-pg-div span.ui-icon').each(function(){
+						var icon = $(this);
+						var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
+						if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
+					})
+                     */
+                }
+
+                //replace icons with FontAwesome icons like above
+                function updatePagerIcons(table) {
+                    var replacement =
+                        {
+                            'ui-icon-seek-first' : 'ace-icon fa fa-angle-double-left bigger-140',
+                            'ui-icon-seek-prev' : 'ace-icon fa fa-angle-left bigger-140',
+                            'ui-icon-seek-next' : 'ace-icon fa fa-angle-right bigger-140',
+                            'ui-icon-seek-end' : 'ace-icon fa fa-angle-double-right bigger-140'
+                        };
+                    $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
+                        var icon = $(this);
+                        var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
+
+                        if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
+                    })
+                }
+
+                function enableTooltips(table) {
+                    $('.navtable .ui-pg-button').tooltip({container:'body'});
+                    $(table).find('.ui-pg-div').tooltip({container:'body'});
+                }
+
+                //var selr = jQuery(grid_selector).jqGrid('getGridParam','selrow');
+
+                $(document).one('ajaxloadstart.page', function(e) {
+                    $.jgrid.gridDestroy(grid_selector);
+                    $('.ui-jqdialog').remove();
+                });
+            });
+
+
+
+        </script>
+    </body>
+</html>

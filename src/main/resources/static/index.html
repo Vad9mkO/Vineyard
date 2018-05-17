@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+	<link href="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/theme-default.min.css"
+		  rel="stylesheet" type="text/css" />
+	<link href='https://fonts.googleapis.com/css?family=Cookie' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:700' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Sancreek' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Great+Vibes' rel='stylesheet' type='text/css'>
+
+	<link rel="stylesheet" href="css/resetGreetingPage.css"> <!-- CSS reset -->
+	<link rel="stylesheet" href="css/greetingPage.css"> <!-- Gem style -->
+
+
+	<link rel="stylesheet" href="css/slider.css" type="text/css">
+	<!--<link rel="stylesheet" href="css/mainApp.css" type="text/css">-->
+	<!--<link rel="stylesheet" href="css/vendor.css" type="text/css">-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+	<script src="js/jquery.flexslider-min.js"></script>
+
+	<!--<script src="https://code.jquery.com/jquery-3.2.1.min.js"-->
+			<!--integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="-->
+			<!--crossorigin="anonymous"></script>-->
+
+	<script src="js/main.js"></script> <!-- Gem jQuery -->
+	<script src="js/modernizr.js"></script> <!-- Modernizr -->
+
+	<title>Vineyard manager</title>
+</head>
+<body>
+
+
+	<div class="flex-container">
+		<div class="flexslider">
+
+			<div id="slides">
+
+				<header role="banner" id="header" style="display: block">
+					<div id="cd-logo"><span data-text="Vineyard manager" class="dashed-shadow hello">Vineyard manager</span></div>
+
+					<nav class="main-nav">
+						<ul>
+							 <!--insert more links here -->
+							<li class="li-signin" id="language">
+									<!--<a class="cd-signin" href="javascript:void(0);" style="border-top: none; background-image: url('img/translate.png');-->
+ <!--height: 32px; width: 32px; ">-->
+										<!--&lt;!&ndash;<i class="fa"><img src="img/translate.png"/></i>&ndash;&gt;-->
+										<!--&lt;!&ndash;<img style="height: 40px;" src="img/translate.png"/>&ndash;&gt;-->
+										<!--&lt;!&ndash;<sup>&ndash;&gt;-->
+											<!--&lt;!&ndash;<span class="counter">2</span>&ndash;&gt;-->
+										<!--&lt;!&ndash;</sup>&ndash;&gt;-->
+									<!--</a>-->
+									<!--<div class="dropdown-menu notifications-dropdown-menu">-->
+										<!--<ul class="notifications-container">-->
+											<!--<li>-->
+												<!--<a href="javascript:void(0);" class="notification-item">-->
+													<!--<div class="img-col">-->
+														<!--<div class="img" style="background-image: url('img/flag_ukraine.ico')"></div>-->
+													<!--</div>-->
+												<!--</a>-->
+											<!--</li>-->
+											<!--<li>-->
+												<!--<a href="javascript:void(0);" class="notification-item">-->
+													<!--<div class="img-col">-->
+														<!--<div class="img" style="background-image: url('img/flag_uk.ico')"></div>-->
+													<!--</div>-->
+												<!--</a>-->
+											<!--</li>-->
+										<!--</ul>-->
+									<!--</div>-->
+								</li>
+                            <li id="cd-language"><div id="image"><a class="cd-language" href="#0"></a>
+                                <div class="dropdojwn-menu notifications-dropdown-menu">
+                                    <ul class="notifications-container">
+                                        <li>
+                                            <a href="javascript:void(0);" class="notification-item">
+                                                <div class="img-col">
+                                                    <div class="img" style="background-image: url('img/flag_ukraine.ico')"></div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);" class="notification-item">
+                                                <div class="img-col">
+                                                    <div class="img" style="background-image: url('img/flag_uk.ico')"></div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div></li>
+							<li id="li-signin"><a style="" class="cd-signin" href="maininfo.html">Sign in</a></li>
+							<li id="li-signup"><a class="cd-signup" href="#0">Sign up</a></li>
+						</ul>
+					</nav>
+				</header>
+
+				<ul class="slides">
+					<li>
+						<img src="img/vineyard2.jpg" />
+						<p>Best vineyard systems.</p>
+					</li>
+
+					<li>
+						<img src="img/vineyard1.jpg" />
+						<p>Leader in winery IoT market.</p>
+					</li>
+
+					<li>
+						<img src="img/vineyard3.jpg" />
+						<p>Innovative technologies and solutions.</p>
+					</li>
+
+					<li>
+						<img src="img/vineyard4.jpg" />
+						<p>Impossible is nothing!</p>
+					</li>
+				</ul>
+			</div>
+
+		</div>
+	</div>
+
+
+	<div class="cd-user-modal"> <!-- this is the entire modal form, including the background -->
+		<div class="cd-user-modal-container"> <!-- this is the container wrapper -->
+			<ul class="cd-switcher">
+				<li><a href="#0">Sign in</a></li>
+				<li><a href="#0">New account</a></li>
+			</ul>
+
+			<div id="cd-login"> <!-- log in form -->
+				<form class="cd-form" id="authorization">
+					<p class="fieldset">
+						<label class="image-replace cd-email" for="signin-email">E-mail</label>
+						<input class="full-width has-padding has-border" name="email" id="signin-email" type="email" placeholder="E-mail">
+						<span class="cd-error-message">Error message here!</span>
+					</p>
+
+					<p class="fieldset">
+						<label class="image-replace cd-password" for="signin-password">Password</label>
+						<input class="full-width has-padding has-border" name="password" id="signin-password" type="password"  placeholder="Password">
+						<a href="#0" class="hide-password">Show</a>
+						<span class="cd-error-message">Error message here!</span>
+					</p>
+
+					<p class="fieldset">
+						<input class="full-width" type="submit" value="Login">
+					</p>
+				</form>
+
+				<p class="cd-form-bottom-message"><a href="#0">Have smart device identification key?</a></p>
+				<!-- <a href="#0" class="cd-close-form">Close</a> -->
+			</div> <!-- cd-login -->
+
+			<div id="cd-signup"> <!-- sign up form -->
+				<form class="cd-form" id="registration">
+					<p class="fieldset">
+						<label class="image-replace cd-username" for="signup-username">Username</label>
+						<input class="full-width has-padding has-border" name="username" id="signup-username" type="text" placeholder="Username">
+						<span class="cd-error-message">Error message here!</span>
+					</p>
+
+					<p class="fieldset">
+						<label class="image-replace cd-email" for="signup-email">E-mail</label>
+						<input class="full-width has-padding has-border" name="email" id="signup-email" type="email" placeholder="E-mail">
+						<span class="cd-error-message">Error message here!</span>
+					</p>
+
+					<p class="fieldset">
+						<label class="image-replace cd-password" for="signup-password">Password</label>
+						<input class="full-width has-padding has-border" name="password" id="signup-password" type="password"  placeholder="Password">
+						<a href="#0" class="hide-password">Show</a>
+						<span class="cd-error-message">Error message here!</span>
+					</p>
+
+					<p class="fieldset">
+						<input class="full-width has-padding" type="submit" value="Create account">
+					</p>
+				</form>
+
+				<!-- <a href="#0" class="cd-close-form">Close</a> -->
+			</div> <!-- cd-signup -->
+
+			<div id="cd-reset-password"> <!-- reset password form -->
+				<p class="cd-form-message">You can login login to your account and adjust profile info with the help of smart device unique identificator, which can be found on device suit.</p>
+
+				<form class="cd-form">
+					<p class="fieldset">
+						<label class="image-replace cd-password" for="reset-email">E-mail</label>
+						<input class="full-width has-padding has-border" id="reset-email" type="password" placeholder="Unique indentifier key">
+						<span class="cd-error-message">Error message here!</span>
+					</p>
+
+					<p class="fieldset">
+						<input class="full-width has-padding" type="submit" value="Login">
+					</p>
+				</form>
+
+				<p class="cd-form-bottom-message"><a href="#0">Back to log-in</a></p>
+			</div> <!-- cd-reset-password -->
+			<a href="#0" class="cd-close-form">Close</a>
+		</div> <!-- cd-user-modal-container -->
+	</div> <!-- cd-user-modal -->
+
+</body>
+</html>
