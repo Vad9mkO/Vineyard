@@ -1337,7 +1337,7 @@ $(function () {
 			$styleLink.attr('href', 'cssVendor/app-' + themeSettings.themeName + '.css');
 		}
 		else {
-			$styleLink.attr('href', 'cssVendor/mainApp.css');
+			$styleLink.attr('href', 'cssVendor/app.css');
 		}
 
 		// App classes
