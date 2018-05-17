@@ -4,7 +4,7 @@ package com.vineyard.courseproject.domain;
 import javax.persistence.*;
 
 @Entity
-//@Table(name = "topic", catalog = "coursedatabase")
+@Table(name = "course", catalog = "coursedatabase")
 public class Course {
 
     @Id
