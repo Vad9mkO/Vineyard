@@ -240,6 +240,11 @@ html[xmlns] .slides { display: block; }
     /*border-radius: 2px;*/
 }
 
+@font-face {
+    font-family: Great;
+    src: url('../fonts/GreatVibes-Regular-webfont.ttf');
+}
+
 .slider_title {
-    font-family: 'Great Vibes';
+    font-family: Great;
 }
