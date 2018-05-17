@@ -1,17 +1,17 @@
 jQuery(document).ready(function($){
 
     var flag = false;
-    // $("body").on("mousemove",function(event) {
-    //     if (event.pageY < 100) {
-    //         if(!flag) {
-    //             flag = true;
-    //             $('header').fadeIn(500);
-    //         }
-    //     } else {
-    //         flag = false;
-    //         $('header').fadeOut(500);
-    //     }
-    // });
+    $("body").on("mousemove",function(event) {
+        if (event.pageY < 100) {
+            if(!flag) {
+                flag = true;
+                $('header').fadeIn(500);
+            }
+        } else {
+            flag = false;
+            $('header').fadeOut(500);
+        }
+    });
 
     //main page slider
     $('.flexslider').flexslider({
@@ -137,11 +137,10 @@ jQuery(document).ready(function($){
         }
 
         if(!error) {
-            var data = { 'email': $("#signin-email").val(), 'password': $('#signin-password').val() };
+            var data = { 'id':0, 'username':'', 'email': $("#signin-email").val(), 'password': $('#signin-password').val() };
 
             $.ajax({
                 type: 'POST',
-                data: data,
                 url: '/authorization',
                 data: JSON.stringify(data),
                 contentType: "application/json; charset=utf-8",
@@ -154,7 +153,7 @@ jQuery(document).ready(function($){
                         $('#li-signup').hide();
                         $('#li-signin').hide();
                         localStorage.setItem('loggedIn', 'true');
-                        window.location.href = "profile.html";
+                        window.location.href = "maininfo.html";
                     }, 1000);
                 },
                 error: function (data) {
@@ -194,13 +193,13 @@ jQuery(document).ready(function($){
             error = true;
         }
 
-        if(!error) {
+        // if(!error) {
 
-            var data = { 'id': 0, 'username': $('#signup-username').val(), 'email': $("#signup-email").val(), 'password': $('#signup-password').val() };
-            
+            // var data = { 'id': 0, 'username': $('#signup-username').val(), 'email': $("#signup-email").val(), 'password': $('#signup-password').val() };
+            var data = { 'id': 0, 'username': '', 'email': '', 'password': ''};
+
             $.ajax({
                 type: 'POST',
-                data: data,
                 url: '/registration',
                 data: JSON.stringify(data),
                 contentType: "application/json; charset=utf-8",
@@ -214,14 +213,14 @@ jQuery(document).ready(function($){
                         $('#li-signup').hide();
                         $('#li-signin').hide();
                         localStorage.setItem('loggedIn', 'true');
-                        window.location.href = "profile.html"
+                        window.location.href = "maininfo.html"
                     }, 1000);
                 },
                 error: function (data) {
                     alert(data.responseText);
                 }
             });
-        }
+        // }
 
         //GET AJAX REQUEST EXAMPLE
         /*

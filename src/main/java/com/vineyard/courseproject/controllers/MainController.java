@@ -1,5 +1,6 @@
 package com.vineyard.courseproject.controllers;
 
+import com.vineyard.courseproject.domain.Client;
 import com.vineyard.courseproject.domain.Topic;
 import com.vineyard.courseproject.services.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin("*")
 public class MainController {
 
     @Autowired
@@ -17,6 +19,22 @@ public class MainController {
 //    public List<Topic> get() {
 //        return getAllTopics();
 //    }
+
+
+    @PostMapping("/registration")
+    public String register(@RequestBody Client client){
+        Client c = client;
+        System.out.println(client.getId());
+        return "Hello";
+    }
+
+    @GetMapping("/authorization")
+    public String authorize(@RequestBody Client client) {
+        return "Hello";
+    }
+
+
+
 
     @RequestMapping("/hello")
     public String sayHiMethod() {
@@ -29,10 +47,10 @@ public class MainController {
         return service.getParticularString(name);
     }
 
-    @RequestMapping("/topics")
-    public List<Topic> getAllTopics() {
-        return service.getAllTopics();
-    }
+//    @RequestMapping("/topics")
+//    public List<Topic> getAllTopics() {
+//        return service.getAllTopics();
+//    }
 
     @RequestMapping(method = RequestMethod.POST, value = "/topics")
     public void addTopic(@RequestBody Topic topic) {
