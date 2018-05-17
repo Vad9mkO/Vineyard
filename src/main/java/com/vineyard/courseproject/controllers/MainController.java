@@ -13,6 +13,11 @@ public class MainController {
     @Autowired
     private Service service;
 
+    @RequestMapping("/*")
+    public String get() {
+        return "Hello, World!";
+    }
+
     @RequestMapping("/hello")
     public String sayHiMethod() {
         return service.getString();
