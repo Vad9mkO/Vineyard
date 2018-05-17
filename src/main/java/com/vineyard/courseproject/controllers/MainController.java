@@ -14,8 +14,8 @@ public class MainController {
     private Service service;
 
     @RequestMapping("/*")
-    public String get() {
-        return "Hello, World!";
+    public List<Topic> get() {
+        return getAllTopics();
     }
 
     @RequestMapping("/hello")

@@ -16,8 +16,18 @@ public class Service {
     @Autowired
     private CourseRepository courseRepository;
 
+    /*
+    *  public ResponseEntity<Recipes> create(
+                @RequestBody Recipes recipes) {
+            Recipes saved= recipesService.add(recipes);
+            return new ResponseEntity<Recipes>(saved, HttpStatus.CREATED);
+        }
+    * */
     public List<Topic> getAllTopics() {
         List<Topic> topics = new ArrayList<>();
+        Topic topic = new Topic();
+        topic.setText("text");
+        topicRepository.save(topic);
         topicRepository.findAll().forEach(topics::add);
         return topics;
     }

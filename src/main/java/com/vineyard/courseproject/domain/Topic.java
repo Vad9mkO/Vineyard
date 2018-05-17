@@ -9,6 +9,8 @@ public class Topic {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+
+    @Column(name = "text")
     private String text;
 
     public Topic() { }
