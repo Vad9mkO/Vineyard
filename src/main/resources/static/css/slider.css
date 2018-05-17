@@ -239,3 +239,7 @@ html[xmlns] .slides { display: block; }
     -moz-border-radius: 2px;
     /*border-radius: 2px;*/
 }
+
+.slider_title {
+    font-family: 'Great Vibes';
+}
