@@ -60,9 +60,9 @@ public class LocalRedisConfiguration {
         ////REDISTOGO
 
         try {
-            String env = System.getenv("REDISCLOUD_URL");
-            if(env != null) {
-                URI redisURI = new URI(env);
+            Optional<String> env = Optional.ofNullable(System.getenv("REDISCLOUD_URL"));
+            if(env.isPresent()) {
+                URI redisURI = new URI(env.get());
 
                 return new JedisPool(new JedisPoolConfig(),
                         redisURI.getHost(),
@@ -70,7 +70,7 @@ public class LocalRedisConfiguration {
                         Protocol.DEFAULT_TIMEOUT,
                         redisURI.getUserInfo().split(":", 2)[1]);
             }
-            return new JedisPool();
+            return new JedisPool(new JedisPoolConfig(), "localhost", 6379, Protocol.DEFAULT_TIMEOUT);
         } catch (URISyntaxException e) {
             throw new RuntimeException("Redis couldn't be configured from URL in REDISTOGO_URL env var:"+
                     System.getenv("REDISTOGO_URL"));
