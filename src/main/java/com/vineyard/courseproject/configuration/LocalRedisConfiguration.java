@@ -10,6 +10,7 @@ import org.springframework.data.redis.connection.RedisPassword;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisClientConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import redis.clients.jedis.JedisPool;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -35,13 +36,17 @@ public class LocalRedisConfiguration {
 
                 redisStandaloneConfiguration.setHostName(redisUri.getHost());//localhost
                 redisStandaloneConfiguration.setPort(redisUri.getPort());//6379
+                redisStandaloneConfiguration.setPassword(RedisPassword.of(redisUri.getUserInfo().split(":", 2)[1]));
+
             } else {
                 redisStandaloneConfiguration.setHostName("localhost");//localhost
                 redisStandaloneConfiguration.setPort(6379);//6379
             }
 
-            redisStandaloneConfiguration.setDatabase(0);
-            redisStandaloneConfiguration.setPassword(RedisPassword.of("password"));
+
+//            JedisPool pool = new JedisPool()
+
+//            redisStandaloneConfiguration.setDatabase(0);
 
             JedisClientConfiguration.JedisClientConfigurationBuilder jedisClientConfiguration = JedisClientConfiguration.builder();
             jedisClientConfiguration.connectTimeout(Duration.ofSeconds(60));// 60s connection timeout
