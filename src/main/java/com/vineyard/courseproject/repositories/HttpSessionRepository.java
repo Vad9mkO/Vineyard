@@ -12,8 +12,8 @@ import java.util.*;
 @Repository
 public class HttpSessionRepository {
 
-//    @Autowired
-//    private RedisTemplate<String, UserSession> redisTemplate;
+    @Autowired
+    private RedisTemplate<String, UserSession> redisTemplate;
 
     private static int var = 1;
     // HashOperations<Key, HashKey, HashValue>
