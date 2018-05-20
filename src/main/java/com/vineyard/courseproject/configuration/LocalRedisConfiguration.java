@@ -24,25 +24,57 @@ import java.util.Optional;
 //@Profile("dev") //@Profile(Constants.SPRING_PROFILE_PRODUCTION) or "default"
 public class LocalRedisConfiguration {
 
-    @Bean //JedisConnectionFactory
-    public JedisPool jedisConnectionFactory() {
+    @Bean //JedisConnectionFactory //JedisPool
+    public JedisConnectionFactory jedisConnectionFactory() {
+
+        JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory();
+        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
 
         try {
-            String env = System.getenv("REDISTOGO_URL");
-            if(env != null) {
-                URI redisURI = new URI(env);
 
-                return new JedisPool(new JedisPoolConfig(),
-                        redisURI.getHost(),
-                        redisURI.getPort(),
-                        Protocol.DEFAULT_TIMEOUT,
-                        redisURI.getUserInfo().split(":", 2)[1]);
+            Optional<String> redisUrl = Optional.ofNullable(System.getenv("REDISTOGO_URL"));
+
+            if (redisUrl.isPresent()) {
+                URI redisUri = new URI(redisUrl.get());
+
+                redisStandaloneConfiguration.setHostName(redisUri.getHost());//localhost
+                redisStandaloneConfiguration.setPort(redisUri.getPort());//6379
+//                redisStandaloneConfiguration.setDatabase(0);
+                redisStandaloneConfiguration.setPassword(RedisPassword.of(redisUri.getUserInfo().split(":", 2)[1]));
+            } else {
+                redisStandaloneConfiguration.setHostName("localhost");//localhost
+                redisStandaloneConfiguration.setPort(6379);//6379
             }
-            return new JedisPool();
-        } catch (URISyntaxException e) {
-            throw new RuntimeException("Redis couldn't be configured from URL in REDISTOGO_URL env var:"+
-                    System.getenv("REDISTOGO_URL"));
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+//            JedisPool pool = new JedisPool()
+
+//            redisStandaloneConfiguration.setDatabase(0);
+
+            JedisClientConfiguration.JedisClientConfigurationBuilder jedisClientConfiguration = JedisClientConfiguration.builder();
+            jedisClientConfiguration.connectTimeout(Duration.ofSeconds(Protocol.DEFAULT_TIMEOUT));// 60s connection timeout
+
+            return jedisConnectionFactory;
+
+        ////REDISTOGO
+//        try {
+//            String env = System.getenv("REDISTOGO_URL");
+//            if(env != null) {
+//                URI redisURI = new URI(env);
+//
+//                return new JedisPool(new JedisPoolConfig(),
+//                        redisURI.getHost(),
+//                        redisURI.getPort(),
+//                        Protocol.DEFAULT_TIMEOUT,
+//                        redisURI.getUserInfo().split(":", 2)[1]);
+//            }
+//            return new JedisPool();
+//        } catch (URISyntaxException e) {
+//            throw new RuntimeException("Redis couldn't be configured from URL in REDISTOGO_URL env var:"+
+//                    System.getenv("REDISTOGO_URL"));
+//        }
 
         ////Heroku redis
 //        JedisPoolConfig poolConfig = new JedisPoolConfig();

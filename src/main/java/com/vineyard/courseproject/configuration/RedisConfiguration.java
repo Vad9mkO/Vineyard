@@ -22,7 +22,7 @@ import javax.servlet.http.HttpSession;
 public class RedisConfiguration {
 
     @Autowired
-    private JedisPool jedisConnectionFactory;
+    private JedisConnectionFactory jedisConnectionFactory;
 
     @Bean
     public StringRedisSerializer stringRedisSerializer() {
