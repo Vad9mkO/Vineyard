@@ -22,7 +22,7 @@ import javax.servlet.http.HttpSession;
 public class RedisConfiguration {
 
     @Autowired
-    private JedisConnectionFactory jedisConnectionFactory;
+    private JedisPool jedisConnectionFactory;
 
     @Bean
     public StringRedisSerializer stringRedisSerializer() {
@@ -34,19 +34,19 @@ public class RedisConfiguration {
         return new Jackson2JsonRedisSerializer<>(UserSession.class);
     }
 
-    @Bean
-    public RedisTemplate<String, UserSession>  redisTemplate() {
-        RedisTemplate<String, UserSession> redisTemplate = new RedisTemplate<>();
-        redisTemplate.setConnectionFactory(jedisConnectionFactory);
-        redisTemplate.setKeySerializer(stringRedisSerializer());
-        redisTemplate.setValueSerializer(jackson2JsonRedisSerializer());
-//        redisTemplate.setHashKeySerializer(new StringRedisSerializer());
-//        redisTemplate.setHashValueSerializer(new StringRedisSerializer());
-//        redisTemplate.setKeySerializer(new StringRedisSerializer());
-//        redisTemplate.setValueSerializer(new StringRedisSerializer());
-//        template.setValueSerializer(new GenericToStringSerializer<Object>(Object.class));
-        return redisTemplate;
-    }
+//    @Bean
+//    public RedisTemplate<String, UserSession>  redisTemplate() {
+//        RedisTemplate<String, UserSession> redisTemplate = new RedisTemplate<>();
+//        redisTemplate.setConnectionFactory(jedisConnectionFactory);
+//        redisTemplate.setKeySerializer(stringRedisSerializer());
+//        redisTemplate.setValueSerializer(jackson2JsonRedisSerializer());
+////        redisTemplate.setHashKeySerializer(new StringRedisSerializer());
+////        redisTemplate.setHashValueSerializer(new StringRedisSerializer());
+////        redisTemplate.setKeySerializer(new StringRedisSerializer());
+////        redisTemplate.setValueSerializer(new StringRedisSerializer());
+////        template.setValueSerializer(new GenericToStringSerializer<Object>(Object.class));
+//        return redisTemplate;
+//    }
 }
 
 

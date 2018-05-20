@@ -12,26 +12,30 @@ import java.util.*;
 @Repository
 public class HttpSessionRepository {
 
-    @Autowired
-    private RedisTemplate<String, UserSession> redisTemplate;
+//    @Autowired
+//    private RedisTemplate<String, UserSession> redisTemplate;
 
+    private static int var = 1;
     // HashOperations<Key, HashKey, HashValue>
 //    HashOperations<String, Long, String> hashOperations = redisTemplate.opsForHash();
 
     public void save(HttpSession httpSession) {
-        redisTemplate.opsForValue().set(httpSession.getId(), sessionToUserSession(httpSession));
+
+//        redisTemplate.opsForValue().set(httpSession.getId(), sessionToUserSession(httpSession));
     }
 
     public UserSession findById(HttpSession httpSession) {
-        return redisTemplate.opsForValue().get(httpSession.getId());
+        return new UserSession();
+//        return redisTemplate.opsForValue().get(httpSession.getId());
     }
 
     public boolean isAuthorized(HttpSession session) {
-        return redisTemplate.hasKey(session.getId());
+        return true;
+//        return redisTemplate.hasKey(session.getId());
     }
 
     public void delete(HttpSession httpSession) {
-        redisTemplate.opsForValue().getOperations().delete(httpSession.getId());
+//        redisTemplate.opsForValue().getOperations().delete(httpSession.getId());
     }
 
     private UserSession sessionToUserSession(HttpSession session) {
@@ -57,8 +61,8 @@ public class HttpSessionRepository {
     }
 
     public void deleteAll() {
-        Optional<Set<String>> keys = Optional.ofNullable(redisTemplate.keys("*"));
-        keys.ifPresent(x -> redisTemplate.delete(x));
+//        Optional<Set<String>> keys = Optional.ofNullable(redisTemplate.keys("*"));
+//        keys.ifPresent(x -> redisTemplate.delete(x));
     }
 
 //    private Map<String, String> deserializeSession(String serialized) {
