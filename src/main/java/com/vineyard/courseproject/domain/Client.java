@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.HashMap;
 import java.util.Map;
 
 @Entity
@@ -81,7 +82,11 @@ public class Client {
 
         boolean equals = true;
         try {
-            equals = PasswordHash.validatePassword(password, Map.of("salt", client.salt, "hash", client.password));
+            Map<String, String> hashData = new HashMap<>();
+            hashData.put("salt", client.salt);
+            hashData.put("hash", client.password);
+
+            equals = PasswordHash.validatePassword(password, hashData);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (InvalidKeySpecException e) {
