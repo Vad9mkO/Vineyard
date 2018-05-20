@@ -13,6 +13,7 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
+import redis.clients.jedis.Protocol;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -24,18 +25,35 @@ import java.util.Optional;
 public class LocalRedisConfiguration {
 
     @Bean //JedisConnectionFactory
-    public JedisConnectionFactory jedisConnectionFactory() {
+    public JedisPool jedisConnectionFactory() {
 
-        JedisPoolConfig poolConfig = new JedisPoolConfig();
-        poolConfig.setMaxTotal(10);
-        poolConfig.setMaxIdle(5);
-        poolConfig.setMinIdle(1);
-        poolConfig.setTestOnBorrow(true);
-        poolConfig.setTestOnCreate(true);
-        poolConfig.setTestWhileIdle(true);
+        try {
+            String env = System.getenv("REDISTOGO_URL");
+            if(env != null) {
+                URI redisURI = new URI(env);
 
-        JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory(poolConfig);
-        return jedisConnectionFactory;
+                return new JedisPool(new JedisPoolConfig(),
+                        redisURI.getHost(),
+                        redisURI.getPort(),
+                        Protocol.DEFAULT_TIMEOUT,
+                        redisURI.getUserInfo().split(":", 2)[1]);
+            }
+            return new JedisPool();
+        } catch (URISyntaxException e) {
+            throw new RuntimeException("Redis couldn't be configured from URL in REDISTOGO_URL env var:"+
+                    System.getenv("REDISTOGO_URL"));
+        }
+
+        ////Heroku redis
+//        JedisPoolConfig poolConfig = new JedisPoolConfig();
+//        poolConfig.setMaxTotal(10);
+//        poolConfig.setMaxIdle(5);
+//        poolConfig.setMinIdle(1);
+//        poolConfig.setTestOnBorrow(true);
+//        poolConfig.setTestOnCreate(true);
+//        poolConfig.setTestWhileIdle(true);
+//        JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory(poolConfig);
+//        return jedisConnectionFactory;
 
 //        JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory();
 //        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
