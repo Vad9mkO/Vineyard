@@ -2943,3 +2943,16 @@ span a {
   @media (max-width: 767.98px) {
     .header .header-block-nav .profile-dropdown-menu {
       margin-top: 8px; } }
+
+.zoom {
+  background-color: green;
+  transition: transform .2s; /* Animation */
+  margin: 0 auto;
+    z-index: 1000;
+}
+
+.zoom:hover {
+    background-image: url('img/flag_uk.ico');
+
+  transform: scale(5);
+}

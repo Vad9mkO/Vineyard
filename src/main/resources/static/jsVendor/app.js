@@ -1492,6 +1492,4 @@ function localization(docNum) {
 	} else if(docNum == 3) { //table
 
 	}
-
-
 }

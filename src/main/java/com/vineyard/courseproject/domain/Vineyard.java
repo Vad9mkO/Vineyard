@@ -7,6 +7,7 @@ import javax.persistence.*;
 
 @Entity
 public class Vineyard {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -20,7 +21,7 @@ public class Vineyard {
     @Column(name = "bushes_number")
     private int numberOfBushes;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "client_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Client client;

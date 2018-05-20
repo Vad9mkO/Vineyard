@@ -137,14 +137,14 @@ jQuery(document).ready(function($){
         }
 
         if(!error) {
-            var data = { 'id':0, 'username':'', 'email': $("#signin-email").val(), 'password': $('#signin-password').val() };
+            var data = { id:0, username:'username', email: $("#signin-email").val(), password: $('#signin-password').val(), salt: ''};
 
             $.ajax({
                 type: 'POST',
                 url: '/authorization',
                 data: JSON.stringify(data),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
+                contentType: "application/json",
+
                 success: function (data) {
                     alert(data);
                     setTimeout(function () {
@@ -193,17 +193,17 @@ jQuery(document).ready(function($){
             error = true;
         }
 
-        // if(!error) {
+        if(!error) {
 
-            // var data = { 'id': 0, 'username': $('#signup-username').val(), 'email': $("#signup-email").val(), 'password': $('#signup-password').val() };
-            var data = { 'id': 0, 'username': '', 'email': '', 'password': ''};
+            var data = { id: 0, username: $('#signup-username').val(), email: $("#signup-email").val(), password: $('#signup-password').val(), salt: ''};
+            // var data = { id: 0, username: 'name', email: 'value', password: 'pas'};
 
             $.ajax({
                 type: 'POST',
                 url: '/registration',
                 data: JSON.stringify(data),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
+                contentType: "application/json",
+                cache: false,
 
                 success: function (data) {
                     alert(data);
@@ -220,23 +220,9 @@ jQuery(document).ready(function($){
                     alert(data.responseText);
                 }
             });
-        // }
+        }
 
-        //GET AJAX REQUEST EXAMPLE
-        /*
-        $('#buttonSum1').click(function(){
-
-            var a = $('#a').val();
-            var b = $('#b').val();
-
-            $.ajax({
-                url: '/api/sum?a=' + a + '&b='+b,
-                success: function(data) {
-                    $('#result1').text(data);
-                }
-            });
-        });
-        */
+        // '/api/sum?a=' + a + '&b='+b
     });
 
     //UNIQUE DEVICE KEY LOGIN BUTTON submit
@@ -262,7 +248,6 @@ jQuery(document).ready(function($){
 
             $.ajax({
                 type: 'POST',
-                data: data,
                 url: '/deviceKeyLogin',
                 data: JSON.stringify(data),
                 contentType: "application/json; charset=utf-8",
@@ -283,6 +268,22 @@ jQuery(document).ready(function($){
                     alert(data.responseText);
                 }
             });
+
+            //HANDLE LOGOUT DELETE SESSION
+            $('#logout-button').on('click', function () {
+                localStorage['loggedIn'] = 'false';
+                //window.history.go(-200);
+                $.ajax({
+                    url: '/logout',
+                    data: 'logout'
+                });
+            });
+
+            //Check on client side if user logged in to prevent back button click
+
+            if(localStorage['loggedIn'] === 'false'){
+                window.location.href = "index.html";
+            }
         }
     });
 

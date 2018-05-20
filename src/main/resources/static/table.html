@@ -77,14 +77,14 @@
                                         <li>
                                             <a href="javascript:setUkrainian(3)" class="notification-item">
                                                 <div class="img-col">
-                                                    <div class="img" style="background-image: url('static/img/flag_ukraine.ico')"></div>
+                                                    <div class="img" style="background-image: url('img/flag_ukraine.ico')"></div>
                                                 </div>
                                             </a>
                                         </li>
                                         <li>
                                             <a href="javascript:setEnglish(3)" class="notification-item">
                                                 <div class="img-col">
-                                                    <div class="img" style="background-image: url('static/img/flag_uk.ico')"></div>
+                                                    <div class="img" style="background-image: url('img/flag_uk.ico')"></div>
                                                 </div>
                                             </a>
                                         </li>
@@ -93,14 +93,14 @@
                             </li>
                             <li class="profile dropdown">
                                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                                    <div class="img" style="background-image: url('static/img/avatar_human_male_profile_user_icon_512.png')"> </div>
+                                    <div class="img" style="background-image: url('img/avatar_human_male_profile_user_icon_512.png')"> </div>
                                     <span class="name"> John Doe </span>
                                 </a>
                                 <div class="dropdown-menu profile-dropdown-menu" aria-labelledby="dropdownMenu1">
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="#0">
                                         <i class="fa fa-bell icon"></i> <span id="notifications">Notifications</span> </a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="index.html">
+                                    <a class="dropdown-item" href="#sign_out" id="logoutHref">
                                         <i class="fa fa-power-off icon"></i><span id="logout">Logout</span>  </a>
                                 </div>
                             </li>
@@ -359,6 +359,7 @@
             })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
             ga('create', 'UA-80463319-4', 'auto');
             ga('send', 'pageview');
+
         </script>
         <script src="jsVendor/ace-extra.min.js"></script>
         <script src="jsVendor/vendor.js"></script>
@@ -380,6 +381,21 @@
                 <!--crossorigin="anonymous"></script>-->
         <!-- TABLE scripts -->
         <script type="text/javascript">
+
+            $("a[href='#sign_out']").on('click', function () {
+                localStorage['loggedIn'] = 'false';
+
+                window.location.href = 'index.html';
+
+                $.ajax({
+                    url: '/logout',
+                    data: 'logout'
+                });
+            });
+
+            if(localStorage['loggedIn'] === 'false') {
+                window.location.href = 'index.html';
+            }
 
             if(sessionStorage.getItem('lang') === null) {
                 sessionStorage.setItem('lang', 2);

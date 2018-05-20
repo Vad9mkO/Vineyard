@@ -1,9 +1,17 @@
 package com.vineyard.courseproject.domain;
 
+import com.vineyard.courseproject.hashing.PasswordHash;
+
 import javax.persistence.*;
+//import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+import java.util.Map;
 
 @Entity
 public class Client {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -11,11 +19,16 @@ public class Client {
     @Column(name = "username")
     private String username;
 
-    @Column(name = "email")
+    @NotNull
+//    @Email
+    @Column(unique = true)
     private String email;
 
     @Column(name = "password")
     private String password;
+
+    @Column(name = "salt")
+    private String salt;
 
     public int getId() {
         return id;
@@ -47,5 +60,41 @@ public class Client {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Client)) return false;
+
+        Client client = (Client) o;
+
+        if (!email.equals(client.email)) return false;
+
+        boolean equals = true;
+        try {
+            equals = PasswordHash.validatePassword(password, Map.of("salt", client.salt, "hash", client.password));
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (InvalidKeySpecException e) {
+            e.printStackTrace();
+        }
+        return equals;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = username.hashCode();
+        result = 31 * result + email.hashCode();
+        result = 31 * result + password.hashCode();
+        return result;
     }
 }
