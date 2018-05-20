@@ -28,7 +28,7 @@ public class LocalRedisConfiguration {
 
         try {
 
-            Optional<String> redisUrl = Optional.ofNullable(System.getenv("REDISTOGO_URL"));
+            Optional<String> redisUrl = Optional.ofNullable(System.getenv("REDISCLOUD_URL"));
 
             if(redisUrl.isPresent()) {
                 URI redisUri = new URI(redisUrl.get());
