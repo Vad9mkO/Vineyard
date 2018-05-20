@@ -60,7 +60,7 @@ public class LocalRedisConfiguration {
         ////REDISTOGO
 
         try {
-            String env = System.getenv("REDISTOGO_URL");
+            String env = System.getenv("REDISCLOUD_URL");
             if(env != null) {
                 URI redisURI = new URI(env);
 
