@@ -38,10 +38,10 @@ public class LocalRedisConfiguration {
 
             if (redisUrl.isPresent()) {
                 URI redisUri = new URI(redisUrl.get());
-                
+
                 redisStandaloneConfiguration.setHostName(redisUri.getHost());//localhost
                 redisStandaloneConfiguration.setPort(redisUri.getPort());//6379
-//                redisStandaloneConfiguration.setDatabase(0);
+                redisStandaloneConfiguration.setDatabase(0);
                 redisStandaloneConfiguration.setPassword(RedisPassword.of(redisUri.getUserInfo().split(":", 2)[1]));
             } else {
                 redisStandaloneConfiguration.setHostName("localhost");//localhost
@@ -51,7 +51,7 @@ public class LocalRedisConfiguration {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        //Try without JedisClientConfiguration !!!
         JedisClientConfiguration.JedisClientConfigurationBuilder jedisClientConfiguration = JedisClientConfiguration.builder();
         jedisClientConfiguration.connectTimeout(Duration.ofSeconds(Protocol.DEFAULT_TIMEOUT));// 60s connection timeout
 
@@ -109,10 +109,6 @@ public class LocalRedisConfiguration {
 //        }
 
 
-
-
-
-
         ////Heroku redis
 
 //        JedisPoolConfig poolConfig = new JedisPoolConfig();
@@ -125,22 +121,5 @@ public class LocalRedisConfiguration {
 //        JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory(poolConfig);
 //        return jedisConnectionFactory;
 
-//// SPRING BOOT 1.5.13
-//
-////            JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory();
-////            jedisConnectionFactory.setUsePool(true);
-////            jedisConnectionFactory.setHostName(redisUri.getHost());
-////            jedisConnectionFactory.setPort(redisUri.getPort());
-////            jedisConnectionFactory.setTimeout(60);
-////             jedisConnectionFactory.setPassword(redisUri.getUserInfo().split(":",2)[1]);
-////
-////            return jedisConnectionFactory;
-////
-////            /** SPRING BOOT 2.0.2*/
-////
-//        } catch (URISyntaxException e) {
-//            e.printStackTrace();
-//            return null;
-//        }
     }
 }
