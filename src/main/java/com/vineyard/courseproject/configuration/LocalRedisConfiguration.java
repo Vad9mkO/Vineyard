@@ -26,7 +26,7 @@ public class LocalRedisConfiguration {
 
     @Bean //JedisConnectionFactory //JedisPool
     public JedisConnectionFactory jedisConnectionFactory() {
-        
+
         JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory();
         RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
 
@@ -34,7 +34,7 @@ public class LocalRedisConfiguration {
             //REDISTOGO_URL +
             //REDIS_URL +
             //REDISCLOUD_URL
-            Optional<String> redisUrl = Optional.ofNullable(System.getenv("REDISCLOUD_URL"));
+            Optional<String> redisUrl = Optional.ofNullable(System.getenv("REDIS_URL"));
 
             if (redisUrl.isPresent()) {
                 URI redisUri = new URI(redisUrl.get());
