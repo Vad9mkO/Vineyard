@@ -10,7 +10,9 @@ import org.springframework.data.redis.connection.RedisPassword;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisClientConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -21,22 +23,29 @@ import java.util.Optional;
 //@Profile("dev") //@Profile(Constants.SPRING_PROFILE_PRODUCTION) or "default"
 public class LocalRedisConfiguration {
 
-    @Bean
+    @Bean //JedisConnectionFactory
     public JedisConnectionFactory jedisConnectionFactory() {
 
-        JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory();
-        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
+        JedisPoolConfig poolConfig = new JedisPoolConfig();
+        poolConfig.setMaxTotal(10);
+        poolConfig.setMaxIdle(5);
+        poolConfig.setMinIdle(1);
+        poolConfig.setTestOnBorrow(true);
+        poolConfig.setTestOnCreate(true);
+        poolConfig.setTestWhileIdle(true);
 
-//
-        redisStandaloneConfiguration.setHostName("ec2-34-235-90-46.compute-1.amazonaws.com");//localhost
-        redisStandaloneConfiguration.setPort(18529);//6379
-//        redisStandaloneConfiguration.setDatabase(0);
-        redisStandaloneConfiguration.setPassword(RedisPassword.of("p792925e8eb45eabde52403ae0402534671d5550cdb93ee204dbd59e879143c0b"));
-
-        JedisClientConfiguration.JedisClientConfigurationBuilder jedisClientConfiguration = JedisClientConfiguration.builder();
-        jedisClientConfiguration.connectTimeout(Duration.ofSeconds(60));// 60s connection timeout
-
+        JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory(poolConfig);
         return jedisConnectionFactory;
+
+//        JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory();
+//        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
+//
+////
+//        redisStandaloneConfiguration.setHostName("ec2-34-235-90-46.compute-1.amazonaws.com");//localhost
+//        redisStandaloneConfiguration.setPort(18529);//6379
+//        redisStandaloneConfiguration.setDatabase(0);
+//        redisStandaloneConfiguration.setPassword(RedisPassword.of("p792925e8eb45eabde52403ae0402534671d5550cdb93ee204dbd59e879143c0b"));
+//
 //        try {
 //            //REDISCLOUD_URL
 //            //REDIS_URL - heroku redis
@@ -66,22 +75,22 @@ public class LocalRedisConfiguration {
 //            jedisClientConfiguration.connectTimeout(Duration.ofSeconds(60));// 60s connection timeout
 //
 //            return jedisConnectionFactory;
+////
+////
+//// SPRING BOOT 1.5.13
 //
-//
-// SPRING BOOT 1.5.13
-
-//            JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory();
-//            jedisConnectionFactory.setUsePool(true);
-//            jedisConnectionFactory.setHostName(redisUri.getHost());
-//            jedisConnectionFactory.setPort(redisUri.getPort());
-//            jedisConnectionFactory.setTimeout(60);
-//             jedisConnectionFactory.setPassword(redisUri.getUserInfo().split(":",2)[1]);
-//
-//            return jedisConnectionFactory;
-//
-//            /** SPRING BOOT 2.0.2*/
-//
-//             RedisStandaloneConfiguratu
+////            JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory();
+////            jedisConnectionFactory.setUsePool(true);
+////            jedisConnectionFactory.setHostName(redisUri.getHost());
+////            jedisConnectionFactory.setPort(redisUri.getPort());
+////            jedisConnectionFactory.setTimeout(60);
+////             jedisConnectionFactory.setPassword(redisUri.getUserInfo().split(":",2)[1]);
+////
+////            return jedisConnectionFactory;
+////
+////            /** SPRING BOOT 2.0.2*/
+////
+////             RedisStandaloneConfiguratu
 //        } catch (URISyntaxException e) {
 //            e.printStackTrace();
 //            return null;
