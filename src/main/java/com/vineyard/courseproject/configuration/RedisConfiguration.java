@@ -21,8 +21,8 @@ import javax.servlet.http.HttpSession;
 @Configuration
 public class RedisConfiguration {
 
-    @Autowired
-    private JedisPool jedisConnectionFactory;
+    @Autowired //JedisPool
+    private JedisConnectionFactory jedisConnectionFactory;
 
     @Bean
     public StringRedisSerializer stringRedisSerializer() {
