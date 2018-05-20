@@ -27,17 +27,24 @@ public class LocalRedisConfiguration {
         JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory();
         RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
 
+
+        redisStandaloneConfiguration.setHostName("redis-14262.c17.us-east-1-4.ec2.cloud.redislabs.com");//localhost
+                redisStandaloneConfiguration.setPort(14262);//6379
+                redisStandaloneConfiguration.setDatabase(0);
+                redisStandaloneConfiguration.setPassword(RedisPassword.of("QKZshWLJIRsdekGePibLtLWfjWy5Ueet"));
         try {
 
             Optional<String> redisUrl = Optional.ofNullable(System.getenv("REDISCLOUD_URL"));
 
             if(redisUrl.isPresent()) {
                 URI redisUri = new URI(redisUrl.get());
+//                mysql://be875fd7939285:1624c5ca@us-cdbr-iron-east-04.cleardb.net/heroku_b714bc5a91769ff?reconnect=true
+//                redis://rediscloud:QKZshWLJIRsdekGePibLtLWfjWy5Ueet@redis-14262.c17.us-east-1-4.ec2.cloud.redislabs.com:14262
 
-                redisStandaloneConfiguration.setHostName(redisUri.getHost());//localhost
-                redisStandaloneConfiguration.setPort(redisUri.getPort());//6379
-                redisStandaloneConfiguration.setPassword(RedisPassword.of(redisUri.getUserInfo().split(":", 2)[1]));
-
+//                redisStandaloneConfiguration.setHostName(redisUri.getHost());//localhost
+//                redisStandaloneConfiguration.setPort(redisUri.getPort());//6379
+//                redisStandaloneConfiguration.setDatabase(0);
+//                redisStandaloneConfiguration.setPassword(RedisPassword.of(redisUri.getUserInfo().split(":", 2)[1]));
             } else {
                 redisStandaloneConfiguration.setHostName("localhost");//localhost
                 redisStandaloneConfiguration.setPort(6379);//6379
