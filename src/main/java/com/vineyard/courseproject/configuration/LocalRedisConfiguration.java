@@ -31,8 +31,8 @@ public class LocalRedisConfiguration {
         RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
 
         try {
-
-            Optional<String> redisUrl = Optional.ofNullable(System.getenv("REDISTOGO_URL"));
+            //REDISTOGO_URL
+            Optional<String> redisUrl = Optional.ofNullable(System.getenv("REDIS_URL"));
 
             if (redisUrl.isPresent()) {
                 URI redisUri = new URI(redisUrl.get());
@@ -49,14 +49,11 @@ public class LocalRedisConfiguration {
         } catch (Exception e) {
             e.printStackTrace();
         }
-//            JedisPool pool = new JedisPool()
 
-//            redisStandaloneConfiguration.setDatabase(0);
+        JedisClientConfiguration.JedisClientConfigurationBuilder jedisClientConfiguration = JedisClientConfiguration.builder();
+        jedisClientConfiguration.connectTimeout(Duration.ofSeconds(Protocol.DEFAULT_TIMEOUT));// 60s connection timeout
 
-            JedisClientConfiguration.JedisClientConfigurationBuilder jedisClientConfiguration = JedisClientConfiguration.builder();
-            jedisClientConfiguration.connectTimeout(Duration.ofSeconds(Protocol.DEFAULT_TIMEOUT));// 60s connection timeout
-
-            return jedisConnectionFactory;
+        return jedisConnectionFactory;
 
         ////REDISTOGO
 //        try {
