@@ -1,5 +1,6 @@
 package com.vineyard.courseproject.configuration;
 
+import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -53,6 +54,8 @@ public class LocalRedisConfiguration {
         }
         //Try without JedisClientConfiguration !!!
         JedisClientConfiguration.JedisClientConfigurationBuilder jedisClientConfiguration = JedisClientConfiguration.builder();
+        jedisClientConfiguration.usePooling();
+//        GenericObjectPoolConfig genericObjectPoolConfig = new GenericObjectPoolConfig();
         jedisClientConfiguration.connectTimeout(Duration.ofSeconds(Protocol.DEFAULT_TIMEOUT));// 60s connection timeout
 
         return jedisConnectionFactory;
@@ -116,9 +119,12 @@ public class LocalRedisConfiguration {
 //        poolConfig.setMaxIdle(5);
 //        poolConfig.setMinIdle(1);
 //        poolConfig.setTestOnBorrow(true);
-//        poolConfig.setTestOnCreate(true);
-//        poolConfig.setTestWhileIdle(true);
+////        poolConfig.setTestOnCreate(true);
+////        poolConfig.setTestWhileIdle(true);
+//        poolConfig.setTestOnReturn(true);
+//
 //        JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory(poolConfig);
+//        jedisConnectionFactory.setUsePool(true);
 //        return jedisConnectionFactory;
 
     }

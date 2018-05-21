@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.Enumeration;
@@ -32,16 +33,22 @@ public class MainController {
     @Autowired
     private HttpSessionService httpSessionService;
 
-    @GetMapping("/")
-    private String identification(HttpSession session) {
+//    @GetMapping("/")
+//    private String identification(HttpSession session) {
+//
+//        if(!httpSessionService.isAuthorized(session)) {
+//            httpSessionService.save(session);
+//        }
+//
+////        httpSessionService.deleteAll();
+//
+//        return session.getId();
+//    }
 
-        if(!httpSessionService.isAuthorized(session)) {
-            httpSessionService.save(session);
-        }
-
-//        httpSessionService.deleteAll();
-
-        return session.getId();
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest httpServletRequest) {
+        httpSessionService.delete(httpServletRequest.getSession());
+        return "logout";
     }
 
     @PostMapping("/registration")
