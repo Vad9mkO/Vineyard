@@ -54,9 +54,9 @@ public class LocalRedisConfiguration {
         }
         //Try without JedisClientConfiguration !!!
         JedisClientConfiguration.JedisClientConfigurationBuilder jedisClientConfiguration = JedisClientConfiguration.builder();
-        jedisClientConfiguration.usePooling();
-//        GenericObjectPoolConfig genericObjectPoolConfig = new GenericObjectPoolConfig();
-        jedisClientConfiguration.connectTimeout(Duration.ofSeconds(Protocol.DEFAULT_TIMEOUT));// 60s connection timeout
+//        jedisClientConfiguration.usePooling();
+////        GenericObjectPoolConfig genericObjectPoolConfig = new GenericObjectPoolConfig();
+//        jedisClientConfiguration.connectTimeout(Duration.ofSeconds(Protocol.DEFAULT_TIMEOUT));// 60s connection timeout
 
         return jedisConnectionFactory;
 
