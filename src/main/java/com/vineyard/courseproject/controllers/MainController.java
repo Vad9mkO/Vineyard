@@ -33,17 +33,17 @@ public class MainController {
     @Autowired
     private HttpSessionService httpSessionService;
 
-//    @GetMapping("/")
-//    private String identification(HttpSession session) {
-//
-//        if(!httpSessionService.isAuthorized(session)) {
-//            httpSessionService.save(session);
-//        }
-//
-////        httpSessionService.deleteAll();
-//
-//        return session.getId();
-//    }
+    @GetMapping("/")
+    private String identification(HttpSession session) {
+
+        if(!httpSessionService.isAuthorized(session)) {
+            httpSessionService.save(session);
+        }
+
+//        httpSessionService.deleteAll();
+
+        return session.getId();
+    }
 
     @GetMapping("/logout")
     public String logout(HttpServletRequest httpServletRequest) {
