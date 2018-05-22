@@ -1,10 +1,7 @@
 package com.vineyard.courseproject.repositories;
 
-import com.sun.xml.internal.ws.resources.HttpserverMessages;
 import com.vineyard.courseproject.domain.UserSession;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
