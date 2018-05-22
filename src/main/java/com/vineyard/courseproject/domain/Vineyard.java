@@ -12,19 +12,38 @@ public class Vineyard {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(name = "country")
+    private String country;
+
     @Column(name = "region")
     private String region;
 
     @Column(name = "square")
     private double square;
 
-    @Column(name = "bushes_number")
-    private int numberOfBushes;
+    @Column(name = "soil_type")
+    private String soilType;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "client_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Client client;
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getSoilType() {
+        return soilType;
+    }
+
+    public void setSoilType(String soilType) {
+        this.soilType = soilType;
+    }
 
     public int getId() {
         return id;
@@ -48,14 +67,6 @@ public class Vineyard {
 
     public void setSquare(double square) {
         this.square = square;
-    }
-
-    public int getNumberOfBushes() {
-        return numberOfBushes;
-    }
-
-    public void setNumberOfBushes(int numberOfBushes) {
-        this.numberOfBushes = numberOfBushes;
     }
 
     public Client getClientId() {

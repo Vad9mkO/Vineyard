@@ -688,6 +688,7 @@ pre {
 
 .card {
   background-color: #fff;
+
   -webkit-box-shadow: 1px 1px 5px rgba(126, 142, 159, 0.1);
           box-shadow: 1px 1px 5px rgba(126, 142, 159, 0.1);
   margin-bottom: 10px;
@@ -2943,3 +2944,36 @@ span a {
   @media (max-width: 767.98px) {
     .header .header-block-nav .profile-dropdown-menu {
       margin-top: 8px; } }
+.tip {
+    background-image: url('../img/grapes-icon.png');
+    background-color: #EFF3F6;
+    background-size: contain;                      /* <------ */
+    background-repeat:   no-repeat;
+    background-position: center center;
+}
+
+.tip .tiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+
+    top: 120%;
+    left: 50%;
+    margin-left: -60px;
+
+    opacity: 0;
+    transition: opacity 1s;
+
+    /*Position the tooltip*/
+    position: absolute;
+    z-index: 1;
+}
+
+.tip:hover .tiptext {
+    visibility: visible;
+    opacity: 1;
+}

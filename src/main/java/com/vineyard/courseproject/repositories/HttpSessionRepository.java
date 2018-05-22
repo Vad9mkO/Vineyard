@@ -1,6 +1,8 @@
 package com.vineyard.courseproject.repositories;
 
+import com.sun.xml.internal.ws.resources.HttpserverMessages;
 import com.vineyard.courseproject.domain.UserSession;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -27,12 +29,27 @@ public class HttpSessionRepository {
         return redisTemplate.opsForValue().get(httpSession.getId());
     }
 
+    public UserSession findByIdString(String httpSession) {
+        return redisTemplate.opsForValue().get(httpSession);
+    }
+
     public boolean isAuthorized(HttpSession session) {
         return redisTemplate.hasKey(session.getId());
     }
 
     public void delete(HttpSession httpSession) {
         redisTemplate.opsForValue().getOperations().delete(httpSession.getId());
+    }
+
+    public void rewrite(String oldKey, String newKey) {
+        UserSession userSession = redisTemplate.opsForValue().get(oldKey);
+        redisTemplate.opsForValue().set(newKey, userSession);
+        redisTemplate.opsForValue().getOperations().delete(oldKey);
+    }
+
+    public void deleteAll() {
+        Optional<Set<String>> keys = Optional.ofNullable(redisTemplate.keys("*"));
+        keys.ifPresent(x -> redisTemplate.delete(x));
     }
 
     private UserSession sessionToUserSession(HttpSession session) {
@@ -55,11 +72,6 @@ public class HttpSessionRepository {
 //        attributes.forEach((x, y) -> serialized.append(x + ":" + y + ","));
 //        serialized.deleteCharAt(serialized.length() - 1);
         return userSession;
-    }
-
-    public void deleteAll() {
-        Optional<Set<String>> keys = Optional.ofNullable(redisTemplate.keys("*"));
-        keys.ifPresent(x -> redisTemplate.delete(x));
     }
 
 //    private Map<String, String> deserializeSession(String serialized) {

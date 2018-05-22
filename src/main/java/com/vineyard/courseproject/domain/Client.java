@@ -102,4 +102,10 @@ public class Client {
         result = 31 * result + password.hashCode();
         return result;
     }
+
+    public Client() { }
+
+    public Client(int id) {
+        this.id = id;
+    }
 }

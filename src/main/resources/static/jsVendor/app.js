@@ -1025,6 +1025,10 @@ $(function() {
         drawDashboardItemsListSparklines();
     });
 });
+
+var countryCodes = {
+
+}
 $(function() {
 
     var $dashboardSalesMap = $('#dashboard-sales-map');
@@ -1035,6 +1039,21 @@ $(function() {
 
     function drawSalesMap() {
 
+        // Most of the options can be changed after initialization using the following code:
+
+        //     jQuery('#vmap').vectorMap('set', 'colors', {us: '#0000ff'}
+
+        // Instead of colors can be used any parameter except callbacks.
+
+        // Binding callback dynamically:
+
+        // jQuery('#vmap').bind('load.jqvmap',
+        //     function(event, map)
+        //     {
+        //
+        //     }
+        // );
+
         $dashboardSalesMap.empty();
 
         var color = config.chart.colorPrimary.toHexString();
@@ -1042,30 +1061,58 @@ $(function() {
         var selectedColor = tinycolor(config.chart.colorPrimary.toString()).darken(10).toHexString();
 
         var sales_data = {
-            us: 2000,
-            ru: 2000, 
-            gb: 10000,
-            fr: 10000,
-            de: 10000,
-            cn: 10000,
-            in: 10000,
-            sa: 10000,
-            ca: 10000,
-            br: 5000,
-            au: 5000
+
         };
+
+        var colors = {
+            ru: color
+        }
 
         $dashboardSalesMap.vectorMap({
             map: 'world_en',
             backgroundColor: 'transparent',
             color: '#E5E3E5',
+            colors: colors,
+            // colors: object, - object of pairs 'country code' - '#color'
             hoverOpacity: 0.7,
-            selectedColor: selectedColor,
+            selectedColor: [color], //selectedColor
             enableZoom: true,
             showTooltip: true,
+            multiSelectRegion: true,
             values: sales_data,
-            scaleColors: [ color, darkColor],
-            normalizeFunction: 'linear'
+            scaleColors: [color], // [ color, darkColor]
+            normalizeFunction: 'linear',
+            
+            onLoad: function (event, map) {
+
+            },
+            onRegionClick: function(event, code, region)
+            {
+                // event.preventDefault();
+
+            },
+            onRegionSelect: function (event, code, region) {
+                var clr = {};
+                clr[code] = color;
+                jQuery('#dashboard-sales-map').vectorMap('set', 'colors', clr);
+
+            },
+            onRegionDeselect: function (event, code, region) {
+                var clr = {};
+                clr[code] = '#E5E3E5';
+                jQuery('#dashboard-sales-map').vectorMap('set', 'colors', clr);
+            },
+            onLabelShow: function (event, label, code) {
+                //label.text('Bears, vodka, balalaika');
+                // label.html('<div class="map-tooltip"><h1 class="header">Header</h1><p class="description">Some Description</p></div>');
+                //event.preventDefault();
+            },
+            onRegionOver: function (event, code, region) {
+
+            },
+            onRegionOut: function (event, code, region) {
+
+            }
         });
     }
 

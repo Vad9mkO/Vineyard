@@ -24,6 +24,11 @@ public class Environment {
     @Column(name = "vermin_status")
     private boolean verminStatus;
 
+    //Child entity, saved automatically when parent saved manually
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "bush_id", nullable = false)
+    private Bush bush;
+
     public int getId() {
         return id;
     }
@@ -79,10 +84,4 @@ public class Environment {
     public void setBush(Bush bush) {
         this.bush = bush;
     }
-
-    //Child entity, saved automatically when parent saved manually
-    @OneToOne(fetch = FetchType.LAZY)
-
-    @JoinColumn(name = "bush_id", nullable = false)
-    private Bush bush;
 }

@@ -2944,15 +2944,38 @@ span a {
     .header .header-block-nav .profile-dropdown-menu {
       margin-top: 8px; } }
 
-.zoom {
-  background-color: green;
-  transition: transform .2s; /* Animation */
-  margin: 0 auto;
-    z-index: 1000;
-}
 
-.zoom:hover {
-    background-image: url('img/flag_uk.ico');
+/*.tip {*/
+  /*background-image: url('../img/grapes-icon.png');*/
+  /*background-color: #EFF3F6;*/
+  /*background-size: contain;
+/*background-repeat:   no-repeat;*/
+/*background-position: center center;*/
+/*}*/
 
-  transform: scale(5);
-}
+/*.tip .tiptext {*/
+  /*visibility: hidden;*/
+  /*width: 120px;*/
+  /*background-color: black;*/
+  /*color: #fff;*/
+  /*text-align: center;*/
+  /*border-radius: 6px;*/
+  /*padding: 5px;*/
+
+  /*top: 120%;*/
+  /*left: 50%;*/
+  /*margin-left: -60px;*/
+
+  /*opacity: 0;*/
+  /*transition: opacity 1s;*/
+
+  /*!*Position the tooltip*!*/
+  /*position: absolute;*/
+  /*z-index: 1;*/
+/*}*/
+
+/*.tip:hover .tiptext {*/
+  /*visibility: visible;*/
+  /*opacity: 1;*/
+/*}*/
+

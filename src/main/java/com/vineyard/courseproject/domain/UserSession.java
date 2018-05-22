@@ -9,15 +9,40 @@ import java.util.Map;
 
 public class UserSession implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+//    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 2259943519977343907L;
 
     @NotEmpty
     private String uid;
 
+    private String email;
+
+    private int databaseId;
+
     private Map<String, String> attributes = new HashMap<>();
+
+    public int getDatabaseId() {
+        return databaseId;
+    }
+
+    public void setDatabaseId(int databaseId) {
+        this.databaseId = databaseId;
+    }
+
+    public void setAttributes(Map<String, String> attributes) {
+        this.attributes = attributes;
+    }
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getUid() {
@@ -42,6 +67,8 @@ public class UserSession implements Serializable {
     public String toString() {
         return "UserSession{" +
                 "uid='" + uid + '\'' +
+                ", email='" + email + '\'' +
+                ", databaseId=" + databaseId +
                 ", attributes=" + attributes +
                 '}';
     }

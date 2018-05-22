@@ -269,23 +269,15 @@ jQuery(document).ready(function($){
                 }
             });
 
-            //HANDLE LOGOUT DELETE SESSION
-            $('#logout-button').on('click', function () {
-                localStorage['loggedIn'] = 'false';
-                //window.history.go(-200);
-                $.ajax({
-                    url: '/logout',
-                    data: 'logout'
-                });
-            });
 
-            //Check on client side if user logged in to prevent back button click
-
-            if(localStorage['loggedIn'] === 'false'){
-                window.location.href = "index.html";
-            }
         }
     });
+
+
+    //HANDLE IF USER WAS ALREADY LOGGED IN THEN GO TO MAP PAGE
+    if(localStorage['loggedIn'] === 'true') {
+        window.location.href = 'map.html';
+    }
 
 });
 

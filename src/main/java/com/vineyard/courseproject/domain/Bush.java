@@ -30,6 +30,7 @@ public class Bush {
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "bush")
     private Environment environment;
+
     public int getId() {
         return id;
     }

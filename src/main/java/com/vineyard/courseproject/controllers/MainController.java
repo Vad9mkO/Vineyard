@@ -1,24 +1,21 @@
 package com.vineyard.courseproject.controllers;
 
-import com.vineyard.courseproject.domain.Client;
-import com.vineyard.courseproject.domain.UserSession;
-import com.vineyard.courseproject.services.ClientService;
-import com.vineyard.courseproject.services.HttpSessionService;
-import com.vineyard.courseproject.services.VineyardService;
+import com.vineyard.courseproject.domain.*;
+import com.vineyard.courseproject.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 @CrossOrigin("*")
@@ -31,50 +28,102 @@ public class MainController {
     private VineyardService vineyardService;
 
     @Autowired
+    private BushService bushService;
+
+    @Autowired
+    private EnvironmentService environmentService;
+
+    @Autowired
     private HttpSessionService httpSessionService;
 
-    @GetMapping("/")
-    private String identification(HttpSession session) {
+//    @GetMapping("/")
+//    private String identification(HttpSession session) {
+//
+//        if(!httpSessionService.isAuthorized(session)) {
+//            httpSessionService.save(session);
+//        }
+////        httpSessionService.deleteAll();
+//
+//        return session.getId();
+//    }
 
-        if(!httpSessionService.isAuthorized(session)) {
-            httpSessionService.save(session);
+    @GetMapping("/getVineyardsAndEnvironments")
+    public Map<String, Object> getVineyardsAndEnvironments(HttpSession httpSession, HttpServletRequest httpServletRequest) {
+
+//        System.out.println("Session id: " + httpSession.getId());
+//        System.out.println("Cookie: " + httpSessionService.getJsessionIdCookie(httpServletRequest));
+//        boolean wasServerShutDown = httpSessionService.wasServerShutDown(httpSession, httpServletRequest);
+//        System.out.println(wasServerShutDown);
+
+        Map<String, Object> result = new HashMap<>();
+
+        if(httpSessionService.wasServerShutDown(httpSession, httpServletRequest)) {
+            httpSessionService.rewrite(httpSessionService.getJsessionIdCookie(httpServletRequest), httpSession.getId());
         }
 
-//        httpSessionService.deleteAll();
+        UserSession userSession = httpSessionService.findById(httpSession);
+        List<Vineyard> vineyards = vineyardService.getClientVineyards(userSession);
+        List<Environment> environments = new ArrayList<>();
 
-        return session.getId();
+        vineyards.forEach(x -> environments.add(environmentService.getByVineyardId(x)));
+
+        result.put("vineyards", vineyards);
+        result.put("environments", environments);
+
+//        return result;
+        return new HashMap<>();
+
     }
 
-    @GetMapping("/logout")
-    public String logout(HttpServletRequest httpServletRequest) {
+    @GetMapping("/logOut")
+    public String logOut(HttpServletRequest httpServletRequest) {
+
         httpSessionService.delete(httpServletRequest.getSession());
         return "logout";
     }
 
     @PostMapping("/registration")
-    public ResponseEntity register(@RequestBody Client client){
+    public ResponseEntity register(@RequestBody Client client, HttpSession httpSession){
 
         if(clientService.clientExists(client)){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Such email was already registered!");
         } else {
             clientService.addClient(client);
+            httpSessionService.save(httpSession);
+
             return ResponseEntity.status(HttpStatus.CREATED).body("Successfully registered!");
         }
     }
 
     @PostMapping("/authorization")
-    public ResponseEntity authorize(@Valid @RequestBody Client client) {
+    public ResponseEntity authorize(@Valid @RequestBody Client client, HttpSession httpSession, HttpServletResponse httpServletResponse) {
 
         Optional<Client> databaseClient = clientService.getClientByEmail(client);
         if(databaseClient.isPresent()) {
             boolean equals = client.equals(databaseClient.get());
-            return equals ? ResponseEntity.status(HttpStatus.OK).body("Successfully authorized!") :
-                            ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Wrong password!");
+            if(equals) {
+                httpSessionService.save(httpSession);
 
+                httpServletResponse.addCookie(new Cookie("JSESSIONID", httpSession.getId()));
+//                httpSession.setAttribute("JSESSIONID", httpSession.getId());
+//                httpSession.setMaxInactiveInterval(10000000);
+
+//                HttpHeaders httpHeaders = new HttpHeaders();
+//                httpHeaders.add("Set-Cookie", httpSession.getId());
+
+                return ResponseEntity.status(HttpStatus.OK).body("Successfully authorized!");
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Wrong password!");
+            }
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Wrong email!");
         }
     }
+
+
+
+
+
 
 
 

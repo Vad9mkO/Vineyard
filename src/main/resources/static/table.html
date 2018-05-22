@@ -383,19 +383,24 @@
         <script type="text/javascript">
 
             $("a[href='#sign_out']").on('click', function () {
-                localStorage['loggedIn'] = 'false';
-
-                window.location.href = 'index.html';
-
                 $.ajax({
-                    url: '/logout',
-                    data: 'logout'
+                    method: "GET",
+                    url: "/logOut",
+                    success: function (data) {
+                        alert(data);
+
+                        localStorage['loggedIn'] = 'false';
+                        window.location.href = 'index.html';
+                    },
+                    error: function (data) {
+                        alert(data);
+                    }
                 });
             });
 
-            if(localStorage['loggedIn'] === 'false') {
-                window.location.href = 'index.html';
-            }
+//            if(localStorage['loggedIn'] === 'false') {
+//                window.location.href = 'index.html';
+//            }
 
             if(sessionStorage.getItem('lang') === null) {
                 sessionStorage.setItem('lang', 2);
