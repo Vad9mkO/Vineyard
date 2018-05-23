@@ -19,7 +19,7 @@ public class VineyardService {
 
     public List<Vineyard> getClientVineyards(UserSession userSession) {
         List<Vineyard> vineyards = new ArrayList<>();
-        vineyardRepository.findAllByClient(new Client(userSession.getDatabaseId())).forEach(vineyards::add);
+        vineyardRepository.findAllByClientId(userSession.getDatabaseId()).forEach(vineyards::add);
 
         return vineyards;
     }

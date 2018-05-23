@@ -3,8 +3,10 @@ package com.vineyard.courseproject.repositories;
 import com.vineyard.courseproject.domain.Bush;
 import com.vineyard.courseproject.domain.Environment;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-public interface EnvironmentRepository extends CrudRepository<Environment, String> {
+@Repository
+public interface EnvironmentRepository extends CrudRepository<Environment, Integer> {
 
-    public Environment findByBush(Bush bush);
+    Environment findByBushId(Integer bushId);
 }

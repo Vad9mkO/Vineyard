@@ -5,13 +5,16 @@ import com.vineyard.courseproject.hashing.PasswordHash;
 import javax.persistence.*;
 //import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.HashMap;
 import java.util.Map;
 
 @Entity
-public class Client {
+public class Client implements Serializable {
+
+    private static final long serialVersionUID = 2259943519977343907L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -103,9 +106,14 @@ public class Client {
         return result;
     }
 
-    public Client() { }
-
-    public Client(int id) {
-        this.id = id;
+    @Override
+    public String toString() {
+        return "Client{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", salt='" + salt + '\'' +
+                '}';
     }
 }

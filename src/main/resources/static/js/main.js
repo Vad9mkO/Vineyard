@@ -153,7 +153,7 @@ jQuery(document).ready(function($){
                         $('#li-signup').hide();
                         $('#li-signin').hide();
                         localStorage.setItem('loggedIn', 'true');
-                        window.location.href = "maininfo.html";
+                        window.location.href = "map.html";
                     }, 1000);
                 },
                 error: function (data) {
@@ -213,7 +213,7 @@ jQuery(document).ready(function($){
                         $('#li-signup').hide();
                         $('#li-signin').hide();
                         localStorage.setItem('loggedIn', 'true');
-                        window.location.href = "maininfo.html"
+                        window.location.href = "map.html"
                     }, 1000);
                 },
                 error: function (data) {

@@ -2,8 +2,10 @@ package com.vineyard.courseproject.repositories;
 
 import com.vineyard.courseproject.domain.Client;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-public interface ClientRepository extends CrudRepository<Client, String> {
+@Repository
+public interface ClientRepository extends CrudRepository<Client, Integer> {
 
     Client findFirstByEmail(String email);
 

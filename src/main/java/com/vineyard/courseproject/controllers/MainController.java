@@ -1,7 +1,10 @@
 package com.vineyard.courseproject.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vineyard.courseproject.domain.*;
 import com.vineyard.courseproject.services.*;
+import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -15,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.*;
 
 @RestController
@@ -34,21 +38,20 @@ public class MainController {
     private EnvironmentService environmentService;
 
     @Autowired
+    private TreatmentHistoryService treatmentHistoryService;
+
+    @Autowired
     private HttpSessionService httpSessionService;
 
 //    @GetMapping("/")
 //    private String identification(HttpSession session) {
-//
-//        if(!httpSessionService.isAuthorized(session)) {
-//            httpSessionService.save(session);
-//        }
-////        httpSessionService.deleteAll();
+//        httpSessionService.deleteAll();
 //
 //        return session.getId();
 //    }
 
     @GetMapping("/getVineyardsAndEnvironments")
-    public Map<String, Object> getVineyardsAndEnvironments(HttpSession httpSession, HttpServletRequest httpServletRequest) {
+    public Map<String, Object> getVineyardsAndEnvironments(HttpSession httpSession, HttpServletRequest httpServletRequest) throws JsonProcessingException {
 
 //        System.out.println("Session id: " + httpSession.getId());
 //        System.out.println("Cookie: " + httpSessionService.getJsessionIdCookie(httpServletRequest));
@@ -63,6 +66,7 @@ public class MainController {
 
         UserSession userSession = httpSessionService.findById(httpSession);
         List<Vineyard> vineyards = vineyardService.getClientVineyards(userSession);
+
         List<Environment> environments = new ArrayList<>();
 
         vineyards.forEach(x -> environments.add(environmentService.getByVineyardId(x)));
@@ -70,9 +74,31 @@ public class MainController {
         result.put("vineyards", vineyards);
         result.put("environments", environments);
 
-//        return result;
-        return new HashMap<>();
+//        return new String[] {
+//                objectMapper.writeValueAsString(environments.get(0)),
+        return result;
+    }
 
+    @GetMapping("/getBushes/{vineyardId}")
+    public List<Pair<Bush, Environment>> getBushes(@PathVariable Integer vineyardId) {
+
+        List<Bush> bushes = bushService.getClientBushes(vineyardId);
+        List<Pair<Bush, Environment>> pairs = new ArrayList<>();
+        bushes.forEach(x -> pairs.add(new Pair<>(x, environmentService.getByBushId(x))));
+
+        return pairs;
+    }
+
+    @GetMapping("/getTreatmentHistory/{vineyardId}")
+    public List<TreatmentHistory> getTreatmentHistory(@PathVariable Integer vineyardId) {
+
+//        List<TreatmentHistory> treatmentHistories = treatmentHistoryService.findAllByVineyardId(vineyardId);
+        return treatmentHistoryService.findAllByVineyardId(vineyardId);
+    }
+
+    @PostMapping("/saveTreatment")
+    public void saveTreatment(@RequestBody TreatmentHistory treatmentHistory) {
+        treatmentHistoryService.save(treatmentHistory);
     }
 
     @GetMapping("/logOut")
@@ -83,13 +109,18 @@ public class MainController {
     }
 
     @PostMapping("/registration")
-    public ResponseEntity register(@RequestBody Client client, HttpSession httpSession){
+    public ResponseEntity register(@RequestBody Client client, HttpSession httpSession, HttpServletResponse httpServletResponse){
 
         if(clientService.clientExists(client)){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Such email was already registered!");
         } else {
             clientService.addClient(client);
+
+            httpSession.setAttribute("databaseId", client.getId());
+            httpSession.setAttribute("email", client.getEmail());
             httpSessionService.save(httpSession);
+
+            httpServletResponse.addCookie(new Cookie("JSESSIONID", httpSession.getId()));
 
             return ResponseEntity.status(HttpStatus.CREATED).body("Successfully registered!");
         }
@@ -102,6 +133,9 @@ public class MainController {
         if(databaseClient.isPresent()) {
             boolean equals = client.equals(databaseClient.get());
             if(equals) {
+                httpSession.setAttribute("databaseId", databaseClient.get().getId());
+                httpSession.setAttribute("email", databaseClient.get().getEmail());
+
                 httpSessionService.save(httpSession);
 
                 httpServletResponse.addCookie(new Cookie("JSESSIONID", httpSession.getId()));

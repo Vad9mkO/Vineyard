@@ -55,6 +55,8 @@ public class HttpSessionRepository {
 
         UserSession userSession = new UserSession();
         userSession.setUid(uid.toString());
+        userSession.setEmail(session.getAttribute("email").toString());
+        userSession.setDatabaseId(Integer.parseInt(session.getAttribute("databaseId").toString()));
 
         String key;
         Enumeration<String> enumeration = session.getAttributeNames();

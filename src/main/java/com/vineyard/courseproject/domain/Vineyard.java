@@ -1,12 +1,18 @@
 package com.vineyard.courseproject.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.vineyard.courseproject.serializers.VineyardJsonSerializer;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-public class Vineyard {
+@JsonSerialize(using = VineyardJsonSerializer.class)
+public class Vineyard implements Serializable {
+
+    private static final long serialVersionUID = 2259943519977343907L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,28 +35,20 @@ public class Vineyard {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Client client;
 
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getSoilType() {
-        return soilType;
-    }
-
-    public void setSoilType(String soilType) {
-        this.soilType = soilType;
-    }
-
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     public String getRegion() {
@@ -69,11 +67,31 @@ public class Vineyard {
         this.square = square;
     }
 
-    public Client getClientId() {
+    public String getSoilType() {
+        return soilType;
+    }
+
+    public void setSoilType(String soilType) {
+        this.soilType = soilType;
+    }
+
+    public Client getClient() {
         return client;
     }
 
-    public void setClientId(Client client) {
+    public void setClient(Client client) {
         this.client = client;
+    }
+
+    @Override
+    public String toString() {
+        return "Vineyard{" +
+                "id=" + id +
+                ", country='" + country + '\'' +
+                ", region='" + region + '\'' +
+                ", square=" + square +
+                ", soilType='" + soilType + '\'' +
+                ", client=" + client +
+                '}';
     }
 }

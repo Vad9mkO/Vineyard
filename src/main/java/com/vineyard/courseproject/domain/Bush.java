@@ -1,12 +1,18 @@
 package com.vineyard.courseproject.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.vineyard.courseproject.serializers.BushJsonSerializer;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-public class Bush {
+@JsonSerialize(using = BushJsonSerializer.class)
+public class Bush implements Serializable {
+
+    private static final long serialVersionUID = 2259943519977343907L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,9 +33,11 @@ public class Bush {
     private Vineyard vineyard;
 
     //Parent entity, save "bush" and linked "environment" hibernate saves automatically
-
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "bush")
     private Environment environment;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, mappedBy = "bush")
+    private TreatmentHistory treatmentHistory;
 
     public int getId() {
         return id;
@@ -55,7 +63,7 @@ public class Bush {
         this.grapesWeight = grapesWeight;
     }
 
-    public boolean isHealthStatus() {
+    public boolean getHealthStatus() {
         return healthStatus;
     }
 
@@ -77,5 +85,25 @@ public class Bush {
 
     public void setEnvironment(Environment environment) {
         this.environment = environment;
+    }
+
+    public TreatmentHistory getTreatmentHistory() {
+        return treatmentHistory;
+    }
+
+    public void setTreatmentHistory(TreatmentHistory treatmentHistory) {
+        this.treatmentHistory = treatmentHistory;
+    }
+
+    @Override
+    public String toString() {
+        return "Bush{" +
+                "id=" + id +
+                ", height=" + height +
+                ", grapesWeight=" + grapesWeight +
+                ", healthStatus=" + healthStatus +
+                ", vineyard=" + vineyard +
+                ", environment=" + environment +
+                '}';
     }
 }

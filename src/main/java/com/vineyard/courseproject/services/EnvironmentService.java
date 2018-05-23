@@ -19,8 +19,14 @@ public class EnvironmentService {
     @Autowired
     public BushRepository bushRepository;
 
+    public Environment getByBushId(Bush bush) {
+
+        return environmentRepository.findByBushId(bush.getId());
+    }
+
     public Environment getByVineyardId(Vineyard vineyard) {
+
         Bush bush = bushRepository.findFirstByVineyard(vineyard);
-        return environmentRepository.findByBush(bush);
+        return environmentRepository.findByBushId(bush.getId());
     }
 }

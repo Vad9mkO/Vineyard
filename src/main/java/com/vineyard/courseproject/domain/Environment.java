@@ -1,9 +1,16 @@
 package com.vineyard.courseproject.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.vineyard.courseproject.serializers.EnvironmentJsonSerializer;
+
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-public class Environment {
+@JsonSerialize(using = EnvironmentJsonSerializer.class)
+public class Environment implements Serializable {
+
+    private static final long serialVersionUID = 2259943519977343907L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +32,7 @@ public class Environment {
     private boolean verminStatus;
 
     //Child entity, saved automatically when parent saved manually
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bush_id", nullable = false)
     private Bush bush;
@@ -69,7 +77,7 @@ public class Environment {
         this.soilHumidity = soilHumidity;
     }
 
-    public boolean isVerminStatus() {
+    public boolean getVerminStatus() {
         return verminStatus;
     }
 
@@ -83,5 +91,18 @@ public class Environment {
 
     public void setBush(Bush bush) {
         this.bush = bush;
+    }
+
+    @Override
+    public String toString() {
+        return "Environment{" +
+                "id=" + id +
+                ", temperature=" + temperature +
+                ", luminousity=" + luminousity +
+                ", airHumidity=" + airHumidity +
+                ", soilHumidity=" + soilHumidity +
+                ", verminStatus=" + verminStatus +
+                ", bush=" + bush +
+                '}';
     }
 }
